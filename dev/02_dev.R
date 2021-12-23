@@ -24,6 +24,7 @@ usethis::use_package("vroom")
 ## Add modules ----
 ## Create a module infrastructure in R/
 golem::add_module( name = "DisplayMap" ) # Name of the module
+golem
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
@@ -67,7 +68,7 @@ devtools::build_vignettes()
 usethis::use_github()
 
 # GitHub Actions
-usethis::use_github_action() 
+usethis::use_github_action(name = "R-CMD-check.yaml") 
 # Chose one of the three
 # See https://usethis.r-lib.org/reference/use_github_action.html
 #usethis::use_github_action_check_release() 

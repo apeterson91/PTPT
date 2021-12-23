@@ -1,15 +1,16 @@
 ## code to prepare `hoods` dataset goes here
 
+library(dplyr)
 
-## Taken from 
-hood_pop <- vroom::vroom("~/Google Drive/CityData/Burgh/hood_population.csv")
+## Taken from Univ. of Pittsburgh 
+#hood_pop <- vroom::vroom("~/Google Drive/CityData/Burgh/hood_population.csv")
 
 
 ## data taken from https://data.wprdc.org/dataset/neighborhoods2
-hoods <- read_sf("~/Google Drive/CityData/Burgh/Neighborhoods/Neighborhoods_.shp") %>%
+hoods <- sf::read_sf("~/Google Drive/CityData/Burgh/Neighborhoods/Neighborhoods_.shp") %>%
     select(objectid,hood) %>%
-    st_transform(4326) %>%
-    left_join(hood_pop) %>%
+    sf::st_transform(4326) %>%
+    #left_join(hood_pop) %>%
     ## prob taken from https://bikeleague.org/sites/default/files/LAB_Where_We_Ride_2016.pdf
     ## used in Stage 0
     mutate(cycles = rbeta(n = n(), shape1 =  26 , shape2 = 1000 ))

@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/apeterson91/PTPT/workflows/R-CMD-check/badge.svg)](https://github.com/apeterson91/PTPT/actions)
 <!-- badges: end -->
 
 The goal of PTPT is to inform transit policy in the city of Pittsburgh. In particular those areas of 

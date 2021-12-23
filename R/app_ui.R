@@ -9,8 +9,41 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic 
-    fluidPage(
-      h1("PTPT")
+    navbarPage(
+      title = "Pittsburgh Transit Propensity Tool",
+      id = "nav",
+      tabPanel(
+        "Map",
+        shinyjs::useShinyjs(),
+        div(
+            class = "outer",
+            tags$head(includeCSS("inst/app/www/custom.css")),
+            leaflet::leafletOutput("DisplayMap",width = "100%",height = "100%"),
+            absolutePanel(
+                id = "controls",
+                class = "panel panel-default",
+                fixed = TRUE,
+                top = 60, left = "auto",
+                right = 20, bottom = "auto",
+                width = 330, height = "auto",
+                #style = "opacity: 0.9 z-index: 1; position: absolute",
+                tags$div(title = "Show/Hide Panel",
+                         a(##TODO: Fix this button
+                             id = "toggle_panel",
+                             style = "font-size: 80%",
+                             span(class = "glyphicon glyphicon-circle-arrow-up",
+                                  "Hide")
+                         )),
+                tags$div(title = "Trip purpose",
+                         selectInput("purpose", "Trip purpose:", purposes,
+                                     selectize = FALSE)),
+                tags$div(title = "Geography",
+                         selectInput("geography","Geography:", geographies,
+                                     selectize =  FALSE))
+            ),
+            )
+      )
+      
     )
   )
 }
