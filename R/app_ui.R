@@ -17,7 +17,7 @@ app_ui <- function(request) {
         shinyjs::useShinyjs(),
         div(
             class = "outer",
-            tags$head(includeCSS("inst/app/www/custom.css")),
+            tags$link(href="www/custom.css"),
             leaflet::leafletOutput("DisplayMap",width = "100%",height = "100%"),
             absolutePanel(
                 id = "controls",

@@ -1,8 +1,12 @@
-
+#' Create labels for cycling levels
+#' 
+#' @param hoods sf object containing neighborhood level cycling simulated data
+#' @details Creates quantile cycling labels for dummy cycling data
+#' @return vector of character labels
 get_cycling_labels <- function(hoods){
     
     labels <-  levels(cut(hoods$cycles,
-                          breaks = quantile(hoods$cycles,probs = c(0,0.25,0.5,0.75,1)),
+                          breaks = stats::quantile(hoods$cycles,probs = c(0,0.25,0.5,0.75,1)),
                           include.lowest = TRUE))
     
 }
