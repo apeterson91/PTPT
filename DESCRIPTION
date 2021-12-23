@@ -1,0 +1,29 @@
+Package: PTPT
+Title: PTPT
+Version: 0.0.0.9000
+Authors@R: person('Adam', 'Peterson', email = 'adampeterso@gmail.com', role = c('cre', 'aut'))
+Description: Pittsburgh Transit Propensity Tool Maps Transit Routes and Modes throughout.
+License: MIT + file LICENSE
+Imports: 
+    config (>= 0.3.1),
+    dplyr,
+    golem (>= 0.3.1),
+    leaflet,
+    processx,
+    sf,
+    shiny (>= 1.6.0),
+    shinyjs,
+    vroom
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+URL: https://github.com/apeterson91/PTPT
+BugReports: https://github.com/apeterson91/PTPT/issues
+Suggests: 
+    rmarkdown,
+    knitr,
+    spelling,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Language: en-US
+VignetteBuilder: knitr
