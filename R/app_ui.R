@@ -15,35 +15,8 @@ app_ui <- function(request) {
       tabPanel(
         "Map",
         shinyjs::useShinyjs(),
-        div(
-            class = "outer",
-            tags$link(href="www/custom.css"),
-            leaflet::leafletOutput("DisplayMap",width = "100%",height = "100%"),
-            absolutePanel(
-                id = "controls",
-                class = "panel panel-default",
-                fixed = TRUE,
-                top = 60, left = "auto",
-                right = 20, bottom = "auto",
-                width = 330, height = "auto",
-                #style = "opacity: 0.9 z-index: 1; position: absolute",
-                tags$div(title = "Show/Hide Panel",
-                         a(##TODO: Fix this button
-                             id = "toggle_panel",
-                             style = "font-size: 80%",
-                             span(class = "glyphicon glyphicon-circle-arrow-up",
-                                  "Hide")
-                         )),
-                tags$div(title = "Trip purpose",
-                         selectInput("purpose", "Trip purpose:", purposes,
-                                     selectize = FALSE)),
-                tags$div(title = "Geography",
-                         selectInput("geography","Geography:", geographies,
-                                     selectize =  FALSE))
-            ),
-            )
+        mod_DisplayMap_ui("DisplayMap")
       )
-      
     )
   )
 }

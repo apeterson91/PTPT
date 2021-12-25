@@ -20,11 +20,11 @@ usethis::use_package("dplyr")
 usethis::use_package("sf")
 usethis::use_package("shinyjs")
 usethis::use_package("vroom")
+usethis::use_package("glue")
 
 ## Add modules ----
 ## Create a module infrastructure in R/
 golem::add_module( name = "DisplayMap" ) # Name of the module
-golem
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
@@ -41,7 +41,8 @@ golem::add_css_file( "custom" )
 ## If you have data in your package
 usethis::use_data_raw( name = "streets", open = FALSE ) 
 usethis::use_data_raw( name = "hoods", open = FALSE ) 
-
+usethis::use_data_raw(name = "s0hdata",open = FALSE)
+usethis::use_data_raw(name = "s0sdata",open = FALSE)
 ## Tests ----
 ## Add one line by test you want to create
 usethis::use_test( "app" )

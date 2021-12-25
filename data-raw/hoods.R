@@ -13,6 +13,8 @@ hoods <- sf::read_sf("~/Google Drive/CityData/Burgh/Neighborhoods/Neighborhoods_
     #left_join(hood_pop) %>%
     ## prob taken from https://bikeleague.org/sites/default/files/LAB_Where_We_Ride_2016.pdf
     ## used in Stage 0
-    mutate(cycles = rbeta(n = n(), shape1 =  26 , shape2 = 1000 ))
+    ##TODO(petersonadam): Need to update proportion below to be counts with weights
+    ## to better mimic survey data
+    mutate(work_cycles = rbeta(n = n(), shape1 =  26 , shape2 = 1000 ))
 
 usethis::use_data(hoods, overwrite = TRUE)

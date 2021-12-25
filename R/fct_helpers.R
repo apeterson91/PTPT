@@ -19,3 +19,14 @@ geographies <- c(
     "Neighborhoods" = "neighborhoods",
     "Streets" ="streets"
 )
+
+modes <- c(
+    "Bike+" = "bike",
+    "Bus" = "bus",
+    "T" = "t",
+    "Car" = "car"
+)
+
+mapGeography <- function(geography){
+    return()
+}
