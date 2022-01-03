@@ -42,11 +42,15 @@ mod_DisplayMap_ui <- function(id){
                          checkboxGroupInput(NS(id,"transitmode"),"Mode",
                                             selected = "bike",
                                             choiceNames = list(icon("bicycle"),
+                                                               icon("walking"),
                                                                icon("bus"),
                                                                icon("train"),
                                                                icon("car")),
-                                            choiceValues = c("bicycle","bus",
-                                                             "train","car"),
+                                            choiceValues = c("bicycle",
+                                                             "walk",
+                                                             "bus",
+                                                             "train",
+                                                             "car"),
                                             inline = TRUE
                                             )
                          )
@@ -62,8 +66,6 @@ mod_DisplayMap_ui <- function(id){
 mod_DisplayMap_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
-    
-    shinyjs::onclick("toggle_panel", shinyjs::toggle(id = "input_panel", anim = FALSE))
     
     input_purpose <- reactive({
       if(is.null(input$purpose)) {
@@ -130,7 +132,7 @@ mod_DisplayMap_server <- function(id){
                         highlightOptions = highlightOptions(color = "white",
                                                             weight = 2,
                                                             bringToFront = TRUE),
-                        fillColor = ~colorQuantile("RdYlBu",cycles)(cycles)
+                        fillColor = ~colorQuantile("RdYlBu",work_cycles)(work_cycles)
             )
      })
   })

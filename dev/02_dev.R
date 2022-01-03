@@ -40,7 +40,8 @@ golem::add_css_file( "custom" )
 ## Add internal datasets ----
 ## If you have data in your package
 usethis::use_data_raw( name = "streets", open = FALSE ) 
-usethis::use_data_raw( name = "hoods", open = FALSE ) 
+usethis::use_data_raw( name = "hoods", open = FALSE) 
+usethis::use_data_raw(name = "pghcs", open = FALSE) 
 usethis::use_data_raw(name = "s0hdata",open = FALSE)
 usethis::use_data_raw(name = "s0sdata",open = FALSE)
 ## Tests ----
