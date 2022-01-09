@@ -67,14 +67,6 @@ mod_DisplayMap_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    input_purpose <- reactive({
-      if(is.null(input$purpose)) {
-        "commute"
-      } else {
-        input$purpose
-      }
-    })
-    
     output$DisplayMap <- renderLeaflet({
         leaflet(hoods) %>%
           addProviderTiles(providers$Stamen.TonerLite,
@@ -82,6 +74,22 @@ mod_DisplayMap_server <- function(id){
         setView(-79.995352,40.440936, zoom = 12)
     })
     
+    ## legend
+    observe({
+      df <- hptt %>%
+        dplyr::group_by(hood) %>%
+        dplyr::summarise(cycles = mean(cobs))
+
+     leafletProxy("DisplayMap") %>%
+        addLegend("topleft",
+                  colors = get_color_palette(zcolorscale,4),
+                  labels = get_labels(df$cycles),
+                  layerId = "hood",
+                  title = "% Non-Car Transit to Groceries",
+                  opacity = .5)
+    })
+
+    ## Map polygons
      observe({
        proxy <- leafletProxy("DisplayMap")
        if(input$geography == "streets"){
@@ -108,16 +116,23 @@ mod_DisplayMap_server <- function(id){
                          options = pathOptions(clickable = T),
                          data = streets,
                          labelOptions = labelOptions(direction = 'auto'),
-                         highlightOptions = highlightOptions(color = "white",
-                                                             weight = 2,
-                                                             bringToFront = TRUE)
+                         highlightOptions =
+                           highlightOptions(color = "white",
+                                            weight = 2,
+                                            bringToFront = TRUE)
             )
        }
      })
      
      observe({
        proxy <- leafletProxy("DisplayMap")
-       if(input$geography == "neighborhoods")
+       if(input$geography == "neighborhoods"){
+         df <- hoods %>%
+           dplyr::left_join(hptt %>%
+                            dplyr::group_by(hood) %>%
+                            dplyr::summarise(cycles = mean(cobs)),
+                            by = "hood"
+         ) %>%  sf::st_as_sf()
          proxy %>% 
             clearShapes() %>% 
             addPolygons(color = "#444444",
@@ -126,14 +141,15 @@ mod_DisplayMap_server <- function(id){
                         opacity = 1.0,
                         fillOpacity = 0.5,
                         layerId = ~hood,
-                        data = hoods,
+                        data = df,
                         options = pathOptions(clickable = T),
                         labelOptions = labelOptions(direction = 'auto'),
                         highlightOptions = highlightOptions(color = "white",
                                                             weight = 2,
                                                             bringToFront = TRUE),
-                        fillColor = ~colorQuantile("RdYlBu",work_cycles)(work_cycles)
+                        fillColor = ~colorQuantile("RdYlBu",cycles)(cycles)
             )
+       }
      })
   })
 }

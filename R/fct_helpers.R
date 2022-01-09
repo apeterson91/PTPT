@@ -27,6 +27,44 @@ modes <- c(
     "Car" = "car"
 )
 
-mapGeography <- function(geography){
-    return()
+get_labels <- function(cycleprop){
+    levels(cut(round(cycleprop*100),
+               incude.lowest = TRUE,
+               breaks = quantile(cycleprop, na.rm = TRUE, 
+                                 probs = c(0,0.25,0.5,0.75,1))))
 }
+
+get_colour_palette <- function(colourscale, bins = 10){
+    # Manually modify to be 'standard 10 plus one extra' for 11 levels
+    if (colourscale == "RdYlBu" && bins == 11) {
+        local_palette <- RColorBrewer::brewer.pal(n = 10, name = colourscale)
+        extra_colour <- "#2d004b"
+        local_palette <- append(local_palette, extra_colour)
+    } else {
+        local_palette <- RColorBrewer::brewer.pal(n = bins, name = colourscale)
+    }
+    # Replace #e0f3f8 with #c6dbef for colourbrewer "RdYlBu"
+    if (colourscale == "RdYlBu") {
+        local_palette <- gsub(pattern = "#E0F3F8", replacement = "#C6DBEF", x = local_palette)
+    }
+    local_palette
+}
+
+zcolorscale <- "RdYlBu"
+
+get_color_palette <- function(colourscale, bins = 10){
+    # Manually modify to be 'standard 10 plus one extra' for 11 levels
+    if (colourscale == "RdYlBu" && bins == 11) {
+        local_palette <- RColorBrewer::brewer.pal(n = 10, name = colourscale)
+        extra_colour <- "#2d004b"
+        local_palette <- append(local_palette, extra_colour)
+    } else {
+        local_palette <- RColorBrewer::brewer.pal(n = bins, name = colourscale)
+    }
+    # Replace #e0f3f8 with #c6dbef for colourbrewer "RdYlBu"
+    if (colourscale == "RdYlBu") {
+        local_palette <- gsub(pattern = "#E0F3F8", replacement = "#C6DBEF", x = local_palette)
+    }
+    local_palette
+}
+        
