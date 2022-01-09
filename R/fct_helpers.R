@@ -30,7 +30,7 @@ modes <- c(
 get_labels <- function(cycleprop){
     levels(cut(round(cycleprop*100),
                incude.lowest = TRUE,
-               breaks = quantile(cycleprop, na.rm = TRUE, 
+               breaks = stats::quantile(cycleprop, na.rm = TRUE, 
                                  probs = c(0,0.25,0.5,0.75,1))))
 }
 

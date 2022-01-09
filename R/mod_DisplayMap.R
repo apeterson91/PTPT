@@ -25,7 +25,7 @@ mod_DisplayMap_ui <- function(id){
                 #style = "opacity: 0.9 z-index: 1; position: absolute",
                 tags$div(title = "Show/Hide Panel",
                          a(
-                             id = "toggle_panel",
+                             id = NS(id,"toggle_panel"),
                              style = "font-size: 80%",
                              span(class = "glyphicon glyphicon-circle-arrow-up",
                                   "Hide")
@@ -43,13 +43,14 @@ mod_DisplayMap_ui <- function(id){
                                             selected = "bike",
                                             choiceNames = list(icon("bicycle"),
                                                                icon("walking"),
-                                                               icon("bus"),
-                                                               icon("train"),
+                                                               # icon("bus"),
+                                                               ## Not yet
+                                                               # icon("train"),
                                                                icon("car")),
                                             choiceValues = c("bicycle",
                                                              "walk",
-                                                             "bus",
-                                                             "train",
+                                                             # "bus",
+                                                             # "train",
                                                              "car"),
                                             inline = TRUE
                                             )
@@ -73,6 +74,11 @@ mod_DisplayMap_server <- function(id){
                            options = providerTileOptions(noWrap = TRUE)) %>% 
         setView(-79.995352,40.440936, zoom = 12)
     })
+   
+    ## toggle input panel 
+    shinyjs::onclick("toggle_panel", 
+                     shinyjs::toggle(id = "input_panel",
+                                     anim = FALSE))
     
     ## legend
     observe({

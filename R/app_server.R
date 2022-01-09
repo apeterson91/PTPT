@@ -7,5 +7,5 @@
 app_server <- function( input, output, session ) {
 
     mod_DisplayMap_server("DisplayMap")
-    shinyjs::onclick("toggle_panel", shinyjs::toggle(id = "input_panel", anim = FALSE))
+    ## toggle display
 }
