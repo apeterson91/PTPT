@@ -10,13 +10,18 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic 
     navbarPage(
+      theme = shinythemes::shinytheme("cosmo"),
       title = "Pittsburgh Transit Propensity Tool",
       id = "nav",
       tabPanel(
         "Map",
         shinyjs::useShinyjs(),
         mod_DisplayMap_ui("DisplayMap")
-      )
+      ),
+      tabPanel("About",
+               mod_AboutPage_ui("AboutPage")
+      ),
+      tabPanel("Methods")
     )
   )
 }
@@ -40,7 +45,7 @@ golem_add_external_resources <- function(){
     bundle_resources(
       path = app_sys('app/www'),
       app_title = 'PTPT'
-    )
+    ),
     # Add here other external resources
     # for example, you can add shinyalert::useShinyalert() 
   )

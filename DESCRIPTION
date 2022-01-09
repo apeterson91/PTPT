@@ -15,6 +15,7 @@ Imports:
     sf,
     shiny (>= 1.6.0),
     shinyjs,
+    shinythemes,
     vroom
 Encoding: UTF-8
 LazyData: true
