@@ -36,10 +36,13 @@ mod_DisplayMap_ui <- function(id){
                                 multiple = TRUE,
                                  selectize = FALSE)),
                 tags$div(title = "Geography",
-                         selectInput(NS(id,"geography"),"Geography:", geographies,
+                         selectInput(NS(id,"geography"),
+                                     "Geography:",
+                                     geographies,
                                      selectize =  FALSE)),
                 tags$div(title = "Transit Mode",
-                         checkboxGroupInput(NS(id,"transitmode"),"Mode",
+                         checkboxGroupInput(NS(id,"transitmode"),
+                                            "Mode",
                                             selected = "bike",
                                             choiceNames = list(icon("bicycle"),
                                                                icon("walking"),
@@ -47,17 +50,18 @@ mod_DisplayMap_ui <- function(id){
                                                                ## Not yet
                                                                # icon("train"),
                                                                icon("car")),
-                                            choiceValues = c("bicycle",
-                                                             "walk",
+                                            choiceValues = c("bike",
+                                                             "foot",
                                                              # "bus",
                                                              # "train",
-                                                             "car"),
+                                                             "car"
+                                                             ),
                                             inline = TRUE
                                             )
-                         )
                 )
             ),
             )
+        )
   )
 }
     
@@ -83,15 +87,18 @@ mod_DisplayMap_server <- function(id){
     ## legend
     observe({
       df <- hptt %>%
+        dplyr::filter(stringr::str_detect(mode,
+                                          paste(input$transitmode,
+                                                collapse = "|"))) %>%
         dplyr::group_by(hood) %>%
-        dplyr::summarise(cycles = mean(cobs))
-
+        dplyr::summarise(transit = dplyr::n()) %>%
+        dplyr::ungroup()
      leafletProxy("DisplayMap") %>%
         addLegend("topleft",
                   colors = get_color_palette(zcolorscale,4),
-                  labels = get_labels(df$cycles),
+                  labels = get_labels(df$transit,4),
                   layerId = "hood",
-                  title = "% Non-Car Transit to Groceries",
+                  title = "Groceries % Transit",
                   opacity = .5)
     })
 
@@ -135,10 +142,15 @@ mod_DisplayMap_server <- function(id){
        if(input$geography == "neighborhoods"){
          df <- hoods %>%
            dplyr::left_join(hptt %>%
+                            dplyr::filter(stringr::str_detect(mode,
+                                                       paste(input$transitmode,
+                                                             collapse = "|"))) %>%
                             dplyr::group_by(hood) %>%
-                            dplyr::summarise(cycles = mean(cobs)),
+                            dplyr::summarize(transit = dplyr::n()) %>% 
+                            dplyr::ungroup(),
                             by = "hood"
-         ) %>%  sf::st_as_sf()
+         ) %>%  
+           sf::st_as_sf()
          proxy %>% 
             clearShapes() %>% 
             addPolygons(color = "#444444",
@@ -153,7 +165,8 @@ mod_DisplayMap_server <- function(id){
                         highlightOptions = highlightOptions(color = "white",
                                                             weight = 2,
                                                             bringToFront = TRUE),
-                        fillColor = ~colorQuantile("RdYlBu",cycles)(cycles)
+                        ## TODO what to do when breaks are not unique?
+                        fillColor = ~colorBin("RdYlBu",transit,bins = 4)(transit)
             )
        }
      })
