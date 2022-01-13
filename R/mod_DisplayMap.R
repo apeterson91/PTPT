@@ -32,7 +32,7 @@ mod_DisplayMap_ui <- function(id){
                          )),
                 div(id = NS(id,"input_panel"),
                     tags$div(title = "Trip purpose",
-                    selectInput(NS(id,"purpose"), "Trip purpose:", purposes,
+                    selectInput(NS(id,"transitpurpose"), "Trip purpose:", purposes,
                                 multiple = TRUE,
                                  selectize = FALSE)),
                 tags$div(title = "Geography",
@@ -89,7 +89,11 @@ mod_DisplayMap_server <- function(id){
       df <- hptt %>%
         dplyr::filter(stringr::str_detect(mode,
                                           paste(input$transitmode,
+                                                collapse = "|")),
+                      stringr::str_detect(purpose,
+                                          paste(input$transitpurpose,
                                                 collapse = "|"))) %>%
+        dplyr::distinct(hood,subject_hood_id) %>%
         dplyr::group_by(hood) %>%
         dplyr::summarise(transit = dplyr::n()) %>%
         dplyr::ungroup()
@@ -144,7 +148,11 @@ mod_DisplayMap_server <- function(id){
            dplyr::left_join(hptt %>%
                             dplyr::filter(stringr::str_detect(mode,
                                                        paste(input$transitmode,
-                                                             collapse = "|"))) %>%
+                                                             collapse = "|")),
+                                          stringr::str_detect(purpose,
+                                                paste(input$transitpurpose,
+                                                      collapse = "|"))) %>%
+                            dplyr::distinct(hood,subject_hood_id) %>%
                             dplyr::group_by(hood) %>%
                             dplyr::summarize(transit = dplyr::n()) %>% 
                             dplyr::ungroup(),
