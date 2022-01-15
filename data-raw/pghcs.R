@@ -68,6 +68,7 @@ cshdf <- cshood_ovl %>%
     
 
 ## Aggregate statistics to neighborhood level
+## take mean of medians 
 pghcs <- pgh_wealth %>% 
     right_join(cshdf) %>% 
     mutate(Q = case_when(variable == "B19013_001" ~ "Median Income",
@@ -81,8 +82,11 @@ pghcs <- pgh_wealth %>%
                          variable == "B01002_001" ~ "Median Age"
                          )) %>% 
     group_by(hood,Q) %>% 
-    summarise(estimate = sum(estimate,na.rm = TRUE),
-              moe = moe_sum(moe,estimate,na.rm = TRUE)) %>% 
+    summarise(estimate = sum(estimate, na.rm = TRUE),
+              ## note that these moes are better but not perfect
+              ## see https://walker-data.com/tidycensus/articles/margins-of-error.html
+              moe = moe_sum(moe,estimate,na.rm=TRUE),
+              num_tracts = n()) %>% 
     ungroup()
 
 
