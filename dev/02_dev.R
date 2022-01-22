@@ -48,6 +48,7 @@ usethis::use_data_raw( name = "streets", open = FALSE )
 usethis::use_data_raw( name = "hoods", open = FALSE) 
 usethis::use_data_raw(name = "pghcs", open = FALSE) 
 usethis::use_data_raw(name = "s1hdata",open = FALSE)
+usethis::use_data_raw(name = "s1tdf", open = FALSE)
 usethis::use_data_raw(name = "s1sdata",open = FALSE)
 usethis::use_data_raw(name = "hptt",open = FALSE)
 

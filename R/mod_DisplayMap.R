@@ -93,15 +93,15 @@ mod_DisplayMap_server <- function(id){
                       stringr::str_detect(purpose,
                                           paste(input$transitpurpose,
                                                 collapse = "|"))) %>%
-        dplyr::distinct(hood,subject_hood_id) %>%
-        dplyr::group_by(hood) %>%
+        dplyr::distinct(origin_hood,subject_hood_id) %>%
+        dplyr::group_by(origin_hood) %>%
         dplyr::summarise(transit = dplyr::n()) %>%
         dplyr::ungroup()
      leafletProxy("DisplayMap") %>%
         addLegend("topleft",
                   colors = get_color_palette(zcolorscale,4),
                   labels = get_labels(df$transit,4),
-                  layerId = "hood",
+                  layerId = "origin_hood",
                   title = "Groceries % Transit",
                   opacity = .5)
     })
@@ -146,6 +146,7 @@ mod_DisplayMap_server <- function(id){
        if(input$geography == "neighborhoods"){
          df <- hoods %>%
            dplyr::left_join(hptt %>%
+                              dplyr::rename(hood = origin_hood) %>% 
                             dplyr::filter(stringr::str_detect(mode,
                                                        paste(input$transitmode,
                                                              collapse = "|")),

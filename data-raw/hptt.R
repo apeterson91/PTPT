@@ -3,11 +3,29 @@
 library(tidyverse)
 library(sf)
 
-diffdf <- gtdf %>% 
+diffdf <- s1tdf %>% 
+    st_drop_geometry() %>% 
+    st_as_sf(.,coords=c("tx","ty")) %>% 
+    st_set_crs(4326) %>% 
+    st_join(hoods %>% 
+                select(hood) %>% 
+                rename(dest_hood = hood) %>% 
+                st_transform(4326),
+            join = st_nearest_feature
+            ) %>% 
     st_drop_geometry() %>% 
     as_tibble() %>% 
-    select(origin_ix,grocery_ix,subject_hood_id,hood,mode,duration) %>% 
-    arrange(origin_ix,grocery_ix) %>% 
+    st_as_sf(.,coords=c("fx","fy")) %>% 
+    st_set_crs(4326) %>% 
+    st_join(hoods %>% 
+                select(hood) %>% 
+                rename(origin_hood = hood) %>% 
+                st_transform(4326)) %>% 
+    select(subject_id,origin_ix,trip_ix,origin_hood,
+           dest_hood,purpose,mode,duration) %>% 
+    st_drop_geometry() %>% 
+    arrange(subject_id,origin_ix,trip_ix,
+            origin_hood,dest_hood,purpose,mode) %>% 
     spread(mode,duration) %>% 
     mutate(fcdiff = foot - car,
            fcpdiff = (fcdiff / car)*100,
@@ -18,13 +36,11 @@ diffdf <- gtdf %>%
 
     
 
-hptt <- s1sdata %>% 
-    distinct(subject_hood_id,
-             origin_ix,grocery_ix,
-             origin_hood,dest_hood) %>% 
-    left_join(s1hdata,by = c("origin_hood"="hood",
-                             "subject_hood_id"="subject_hood_id")) %>% 
-    left_join(diffdf) %>% 
+hptt <- diffdf %>%  
+    left_join(s1hdata %>% 
+                  select(-hood) %>% 
+                  st_drop_geometry(),
+              by = "subject_id") %>% 
     as_tibble() %>% 
     mutate(
            bodds = -5 + 
@@ -47,9 +63,6 @@ hptt <- s1sdata %>%
                                   y / (1 + x + y),
                                   1 / (1 + x + y) ))
            })
-    ) %>% 
-    arrange(subject_id) %>% 
-    select(subject_id,everything()) %>% 
-    crossing(tibble(purpose = c("groceries","social","commute")))
+    ) 
 
 usethis::use_data(hptt, overwrite = TRUE)
