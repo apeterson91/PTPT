@@ -33,6 +33,7 @@ mod_DisplayMap_ui <- function(id){
                 div(id = NS(id,"input_panel"),
                     tags$div(title = "Trip purpose",
                     selectInput(NS(id,"transitpurpose"), "Trip purpose:", purposes,
+                                selected = "Commute",
                                 multiple = TRUE,
                                  selectize = FALSE)),
                 tags$div(title = "Geography",
@@ -93,16 +94,17 @@ mod_DisplayMap_server <- function(id){
                       stringr::str_detect(purpose,
                                           paste(input$transitpurpose,
                                                 collapse = "|"))) %>%
-        dplyr::distinct(origin_hood,subject_hood_id) %>%
+        dplyr::mutate(denom = dplyr::n()) %>% 
+        dplyr::distinct(origin_hood, subject_hood_id, denom) %>%
         dplyr::group_by(origin_hood) %>%
-        dplyr::summarise(transit = dplyr::n()) %>%
+        dplyr::summarise(transit = round(100 * dplyr::n() / denom, 2)) %>%
         dplyr::ungroup()
      leafletProxy("DisplayMap") %>%
         addLegend("topleft",
                   colors = get_color_palette(zcolorscale,4),
                   labels = get_labels(df$transit,4),
                   layerId = "origin_hood",
-                  title = "Groceries % Transit",
+                  title = "% Transit",
                   opacity = .5)
     })
 
@@ -153,9 +155,12 @@ mod_DisplayMap_server <- function(id){
                                           stringr::str_detect(purpose,
                                                 paste(input$transitpurpose,
                                                       collapse = "|"))) %>%
-                            dplyr::distinct(hood,subject_hood_id) %>%
+                            dplyr::mutate(denom = dplyr::n()) %>% 
+                            dplyr::distinct(hood,subject_hood_id,denom) %>%
                             dplyr::group_by(hood) %>%
-                            dplyr::summarize(transit = dplyr::n()) %>% 
+                            dplyr::summarize(transit = round(100 * (dplyr::n() 
+                                                                    / denom), 
+                                                             2 )) %>% 
                             dplyr::ungroup(),
                             by = "hood"
          ) %>%  

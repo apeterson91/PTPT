@@ -21,7 +21,11 @@ app_ui <- function(request) {
       tabPanel("About",
                mod_AboutPage_ui("AboutPage")
       ),
-      tabPanel("Methods")
+      tabPanel("Methods",
+                mod_Methods_ui("MethodsPage")
+               ),
+      tabPanel("Analysis"),
+      tabPanel("Trip Entry")
     )
   )
 }

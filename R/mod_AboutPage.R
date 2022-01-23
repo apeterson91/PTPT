@@ -10,9 +10,9 @@
 mod_AboutPage_ui <- function(id){
   ns <- NS(id,"AboutPage")
   tagList(
-           includeHTML("inst/app/www/header.html"),
+           # includeHTML("inst/app/www/header.html"),
            includeHTML("inst/app/www/About.html"),
-           includeHTML("inst/app/www/footer.html")
+           # includeHTML("inst/app/www/footer.html")
   )
 }
     

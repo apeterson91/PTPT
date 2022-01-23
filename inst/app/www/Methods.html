@@ -1,0 +1,47 @@
+
+
+
+<p><span style="color: red;"><strong>NOTE</strong></span></p>
+<p>This documentation is still under review. Be aware that the content may change. Check the github commit history for this project’s <a href="github.com/apeterson91/ptpt">repo</a> to see when changes are made.</p>
+<div id="overview" class="section level1">
+<h1>Overview</h1>
+<p>The methodology underlying the PTPT falls under two headings (1) Data Collection and (2) Substantive Questions. Data collection is laid out in three stages with increasing difficulty and correspondingly higher quality data associated with each successive stage. Methods for investigating substantive questions develop in parallel to Data Collection; models and estimates discussed under this heading should be available with minor adjustment for each of the three data stages. These methods are understood to be open ended and falling under two headings: (1) Descriptive and (2) Prescriptive. That is, methods are developed with the intent to describe the current state of transit use in Pittsburgh, as well as to “prescribe” in decision theoretic terms, what actions (interventions, programs, etc.) may lead to a greater uptake in one mode of transit over another.</p>
+</div>
+<div id="data-collection" class="section level1">
+<h1>Data Collection</h1>
+<p>Before explaining the strategy behind each stage of data collection we introduce notation so that the technical reader can identify consistent terms across all stages of data collection and methods.</p>
+<p>Consider the <span class="math inline">\(i\)</span>th PGH resident, <span class="math inline">\((i=1,...,N)\)</span> who performs each of <span class="math inline">\(K\)</span> trips on a regular basis, say a typical week. We assume, to start, that the mode of transit is fixed per trip - a person <strong>only</strong> walks (for example) to the grocery store. The mode of transit for the <span class="math inline">\(i\)</span>th resident is denoted as <span class="math inline">\(m_i\)</span>, where <span class="math inline">\(m_i \in \{1,...,M}\)</span> and <span class="math inline">\(M\)</span> is the total possible modes of transit. This resident may also have certain characteristics, such as race, income, etc. that may be relevant to understanding their mode choice. We denote the vector of these <span class="math inline">\(p\)</span> characteristics as <span class="math inline">\(Z_i \in \mathbb{R}^{p}\)</span>.</p>
+<p>With this preliminary notation aside, we now describe how these data are collected or generated in each of the three stages constituting the PTPT’s development.</p>
+<div id="stage-1-simulated-data" class="section level2 tabset">
+<h2 class="tabset">Stage 1: Simulated Data</h2>
+<div id="big-picture" class="section level3">
+<h3>Big Picture</h3>
+<p>The first stage of data “collection” for the PTPT is using simulated data. There are several reasons for this. To begin with, simulating data is cheap and quick while still providing some semblance of realism. Indeed, using the wealth of data sources available through the <a href="http://www.wprdc.org/">WPRDC</a> as well as American Community Survey data available through the census, open source data available through <a href="https://www.openstreetmap.org/">openstreetmap</a>, elevation data provided by NASA, and more, simulated data offer us the chance to quickly summon various scenarios of how transit behavior may vary amongst Pittsburgh residents. To this end, we sample 100 fictitious residents across the 88 neighborhoods of Pittsburgh, assign them a random residential parcel and generate three trips (grocery, commute and social) by three modes of transit (walking, biking and driving a personal vehicle). From these we then generate a mode of transit using a discrete choice model. See the Technical Tab for further details.</p>
+<p>Further work in generating data will incorporate further modes of transit, and hypothetical modes of data collection that account for shared household trips, e.g. two subject participants make two different commute trips, but one shared grocery trip. These two will be of primary focus to better reflect both the transit reality of Pittsburghers as well as the likely reality of future data collection - clustered sampling - to which we now turn in greater detail in the next section.</p>
+</div>
+<div id="technical" class="section level3">
+<h3>Technical</h3>
+</div>
+</div>
+<div id="stage-2-convenience-sample" class="section level2">
+<h2>Stage 2: Convenience Sample</h2>
+</div>
+<div id="stage-3-designed-sample" class="section level2">
+<h2>Stage 3: Designed Sample</h2>
+</div>
+</div>
+<div id="substantive-questions" class="section level1">
+<h1>Substantive Questions</h1>
+<div id="propensity-to-transit---the-estimand-of-interest" class="section level2">
+<h2>Propensity to transit - the estimand of interest</h2>
+</div>
+<div id="transit-factors" class="section level2">
+<h2>Transit factors</h2>
+</div>
+</div>
+<div id="discussion-of-results-and-current-work" class="section level1">
+<h1>Discussion of Results and Current Work</h1>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+</div>

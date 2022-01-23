@@ -30,6 +30,7 @@ usethis::use_package("stringr")
 ## Create a module infrastructure in R/
 golem::add_module( name = "DisplayMap" ) # Name of the module
 golem::add_module(name = "AboutPage")
+golem::add_module(name = "Methods")
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
