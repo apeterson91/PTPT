@@ -3,8 +3,8 @@
 #' @param hoods sf object containing neighborhood level cycling simulated data
 #' @details Creates quantile cycling labels for dummy cycling data
 #' @return vector of character labels
-purposes <- c("Commuting" = "commute",
-              "Grocery Run" = "groceries",
+purposes <- c("Commute" = "commute",
+              "Groceries" = "groceries",
               "Social" = "social")
 
 geographies <- c(
