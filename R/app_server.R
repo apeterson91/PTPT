@@ -7,5 +7,5 @@
 app_server <- function( input, output, session ) {
 
     mod_DisplayMap_server("DisplayMap")
-    ## toggle display
+    mod_TripEntry_server("TripEntryPage")
 }

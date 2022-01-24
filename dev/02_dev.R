@@ -31,6 +31,8 @@ usethis::use_package("stringr")
 golem::add_module( name = "DisplayMap" ) # Name of the module
 golem::add_module(name = "AboutPage")
 golem::add_module(name = "Methods")
+golem::add_module(name = "Analysis")
+golem::add_module(name = "TripEntry")
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*

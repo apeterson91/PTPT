@@ -10,9 +10,10 @@
 mod_Methods_ui <- function(id){
   ns <- NS(id,"MethodsPage")
   tagList(
-           includeHTML("inst/app/www/header.html"),
+    #TODO: fix weird html issues when including header/footer
+#           includeHTML("inst/app/www/header.html"),
            includeHTML("inst/app/www/Methods.html"),
-           includeHTML("inst/app/www/footer.html")
+#           includeHTML("inst/app/www/footer.html")
   )
 }
     

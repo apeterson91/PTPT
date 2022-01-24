@@ -19,6 +19,7 @@ modes <- c(
     "Car" = "car"
 )
 
+## TODO: make sure [0,-] is included in labels
 get_labels <- function(transitprop,num_breaks = 10){
     out <- levels(
         cut(transitprop,
