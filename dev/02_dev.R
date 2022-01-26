@@ -23,6 +23,7 @@ usethis::use_package("vroom")
 usethis::use_package("glue")
 usethis::use_package("shinythemes")
 usethis::use_package("stringr")
+usethis::use_package("DT")
 # TODO: look into incorporating leafgl for street segments
 # usethis::use_package("leafgl")
 

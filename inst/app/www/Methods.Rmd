@@ -71,11 +71,11 @@ tibble(`Organization` = c("WPRDC","WPRDC","WPRDC",
                        "Trip Routes/Times"
                        )) %>% 
     gt(caption = "Table 1") %>% 
-    tab_header("Data Sources")
+    tab_header("Data Sources used in the PTPT")
 ```
 ### Big Picture
 
-The first stage of data "collection" for the PTPT is using simulated data. 
+The first stage of data "collection" for the PTPT is generating simulated data. 
 There are several reasons for this. To begin with, simulating data is cheap and 
 quick while still providing some semblance of realism. Indeed, using the wealth
 of data sources available through the [WPRDC](http://www.wprdc.org/) as well
