@@ -24,10 +24,13 @@ app_ui <- function(request) {
       tabPanel("Methods",
                 mod_Methods_ui("MethodsPage")
                ),
-      tabPanel("Analysis"),
       tabPanel("Trip Entry",
                mod_TripEntry_ui("TripEntryPage")
-               )
+               ),
+      navbarMenu("Analyses",
+                 tabPanel("Infrastructure",h3("Infra")),
+                 tabPanel("Culture",h3("Culture"))
+                 )
     )
   )
 }
