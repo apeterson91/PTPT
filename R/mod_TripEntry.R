@@ -22,17 +22,19 @@ mod_TripEntry_ui <- function(id){
                                value = FALSE
                                )
                  ),
-        tabPanel("FAQs",
+        tabPanel("Data Use and FAQS",
                  includeMarkdown("inst/app/www/TripEntryAbout.md")
                  ),
+        "Background Information",
         tabPanel("Demographics",
                  h3("Demographic Information"),
-                 radioButtons("demosex",
+                 radioButtons(NS(id,"demosex"),
                               "Biological Sex",
                               choices = c("Female","Male"),
-                              inline = TRUE
+                              inline = TRUE,
+                              selected = character(),
                               ),
-                 radioButtons("demoage",
+                 radioButtons(NS(id,"demoage"),
                               "Age",
                               choices = c("18-22",
                                           "23-30",
@@ -41,18 +43,20 @@ mod_TripEntry_ui <- function(id){
                                           "50-60",
                                           "60-70",
                                           ">70"),
-                              inline = TRUE
+                              inline = TRUE,
+                              selected = character(),
                               ),
-                 radioButtons("demoedu",
+                 radioButtons(NS(id,"demoedu"),
                               "Highest Level of Education",
                               choices = c(
                                 "High School",
                                 "Some College/Technical School",
                                 "Technical Certification",
                                 "Bachelors Degree",
-                                "Post-Graduate Education")
+                                "Post-Graduate Education"),
+                              selected = character(),
                               ),
-                 radioButtons("demorace",
+                 radioButtons(NS(id,"demorace"),
                               "Race",
                               choices = c(
                                 "Asian",
@@ -60,20 +64,100 @@ mod_TripEntry_ui <- function(id){
                                 "Other",
                                 "White"
                                 ),
+                              selected = character(),
                               inline = TRUE
                               ),
-                 selectInput("subjhood",
+                 radioButtons(NS(id,"demoinc"),
+                              stringr::str_c("Annual Gross Household Income ",
+                                             "(Thousands of U.S. Dollars)"),
+                              choices = c(
+                                "$0-$20",
+                                "$21-$40",
+                                "$41-$60",
+                                "$61-$100",
+                                "$100-$150",
+                                ">$150"),
+                              selected = character()
+                              ),
+                 numericInput(NS(id,"demohouseholdnum"),
+                              label = "Members of Household",
+                              value = 1
+                              ), 
+                 selectInput(NS(id,"subjhood"),
                              "What Neighborhood do you live in?",
                              choices = unique(hoods$hood),
                              selectize = TRUE,
-                 )
+                            )
                  ),
-        "Trips and Transit",
-        tabPanel("Neighborhood"),
+        tabPanel("Transit Background",
+                 h3("Transit Background"),
+                 checkboxGroupInput(NS(id,"transitown"),
+                               label = stringr::str_c("Which of the following ",
+                                                      "do you have access to ",
+                                                      "use in your household?"),
+                               choiceNames = c("Bike",
+                                               "Car",
+                                               "E-bike or electric scooter"),
+                               choiceValues =  c("bike",
+                                                 "car",
+                                                 "ebike")
+                               ),
+                 radioButtons(NS(id,"bikefamiliar"),
+                              label = c("Do you know how to ride a bike?"),
+                              choices = c("Yes","No"),
+                              selected = character(),
+                              ),
+                 radioButtons(NS(id,"busfamiliar"),
+                              label = stringr::str_c("Do you ride a Port ",
+                                                     "Authority Bus with any ",
+                                                     "regularity?"),
+                              choices = c("Regularly: at least once / week",
+                                          "Often: at least once / month",
+                                          "Every now and then: 1 / 4 months",
+                                          "Rarely: 1 / year",
+                                          "Never"),
+                              selected = character()
+                              ),
+                 radioButtons(NS(id,"lrailfamiliar"),
+                              label = stringr::str_c("Do you ride the Port ",
+                                                    "Authority Light Rail ",
+                                                    "(The 'T') with any ",
+                                                    "regularity?"),
+                              choices = c("Regularly: at least once / week",
+                                          "Often: at least once / month",
+                                          "Every now and then: 1 / 4 months",
+                                          "Rarely: 1 / year",
+                                          "Never"),
+                              selected = character()
+                              )
+                 ),
+        "Transit Trips",
+        tabPanel("Grocery",
+                 selectInput(NS(id,"GroceryTripSelect"),
+                             label = "Neighborhood or Street Level Info?",
+                             choices = c("Neighborhood",
+                                         "Street")
+                             )
+                 ),
+        tabPanel("Commute",
+                 selectInput(NS(id,"CommuteTripSelect"),
+                             label = "Neighborhood or Street Level Info?",
+                             choices = c("Neighborhood",
+                                         "Street")
+                             )
+                 ),
+        tabPanel("Social",
+                 selectInput(NS(id,"SocialTripSelect"),
+                             label = c("Neighborhood or Street Level Info?"),
+                             choices = c("Neighborhood",
+                                         "Street")
+                             )
+                 ),
         "Review",
         tabPanel("Review and Submit",
-                 h3("Review and Submit"),
-                 DT::dataTableOutput("record_tbl")
+                 tableOutput(NS(id,"submit_table")),
+                 textInput(NS(id,"submit_code"),label = "Submission Code"),
+                 actionButton("submit",label = "Submit")
                  )
       )
     )
@@ -86,11 +170,26 @@ mod_TripEntry_ui <- function(id){
 mod_TripEntry_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
-    ## TODO: fix the renderTable - not currently showing up
-    output$record_tbl <- renderTable(
-      data.frame("Sex" = input$demosex,
-                 "Age" = input$demoage)
-      )
+    df <- reactive({
+      dplyr::tibble(Age = input$demoage,
+             Sex = input$demosex,
+             Education = input$demoedu,
+             Race = input$demorace,
+             Income = input$demoinc,
+             HouseHold = input$householdnum,
+             Hood = input$subjhood,
+             `Own Car/(e)Bike?` = paste0(input$transitown,collapse = "|"),
+             `Bike Familiarity` = input$bikefamiliar,
+             `Bus Familiarity` = input$busfamiliar,
+             `"T" Familiarity` = input$lrailfamiliar,
+             )
+    })
+    output$submit_table <- renderTable({
+      df()
+    }, 
+    caption = "Respondent Background Information",
+    caption.placement = "top"
+    )
   })
 }
     
