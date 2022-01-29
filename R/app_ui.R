@@ -18,19 +18,23 @@ app_ui <- function(request) {
         shinyjs::useShinyjs(),
         mod_DisplayMap_ui("DisplayMap")
       ),
-      tabPanel("About",
-               mod_AboutPage_ui("AboutPage")
+      tabPanel(
+        "About",
+         mod_AboutPage_ui("AboutPage")
       ),
-      tabPanel("Methods",
-                mod_Methods_ui("MethodsPage")
+      tabPanel(
+        "Methods",
+        mod_Methods_ui("MethodsPage")
                ),
-      tabPanel("Trip Entry",
-               mod_TripEntry_ui("TripEntryPage")
+      tabPanel(
+        "Trip Entry",
+         mod_TripEntry_ui("TripEntryPage")
                ),
-      navbarMenu("Analyses",
-                 tabPanel("Infrastructure",h3("Infra")),
-                 tabPanel("Culture",h3("Culture"))
-                 )
+      navbarMenu(
+        "Analyses",
+        tabPanel("Advocacy",h3("Advocacy")),
+        tabPanel("Education",h3("Education"))
+                )
     )
   )
 }
