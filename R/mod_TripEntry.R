@@ -12,10 +12,12 @@ mod_TripEntry_ui <- function(id){
   tagList(
     fluidPage(
       titlePanel("Trip Entry Form"),
+      ##TODO: clean up code with functions
       navlistPanel(
         "Preliminary Information",
-        tabPanel("Data Release",
+        tabPanel("Data Use Agreement",
                  h3("Data Release Agreement"),
+                 includeMarkdown("inst/app/www/DataUse.md"),
                  checkboxInput("datarelease",
                                "I agree to the terms listed in this 
                                data use and release agreement",
@@ -137,27 +139,69 @@ mod_TripEntry_ui <- function(id){
                              label = "Neighborhood or Street Level Info?",
                              choices = c("Neighborhood",
                                          "Street")
-                             )
+                             ),
+                 tabsetPanel(
+                   id = NS(id,"GroceryTripParam"),
+                   type = "hidden",
+                   tabPanel("Neighborhood",
+                            selectInput(NS(id,"GroceryDestHood"),
+                                        label = "Grocery Store Neighborhood",
+                                        choices = unique(hoods$hood),
+                                        selectize = TRUE
+                                        )
+                            ),
+                   tabPanel("Street",
+                            leafletOutput(NS(id,"GroceryMap")),
+                            )
+                 )
                  ),
         tabPanel("Commute",
                  selectInput(NS(id,"CommuteTripSelect"),
                              label = "Neighborhood or Street Level Info?",
                              choices = c("Neighborhood",
                                          "Street")
-                             )
+                             ),
+                 tabsetPanel(
+                   id = NS(id,"CommuteTripParam"),
+                   type = "hidden",
+                   tabPanel("Neighborhood",
+                            selectInput(NS(id,"CommuteDestHood"),
+                                        label = "Grocery Store Neighborhood",
+                                        choices = unique(hoods$hood),
+                                        selectize = TRUE
+                                        )
+                            ),
+                   tabPanel("Street",
+                            leafletOutput(NS(id,"CommuteMap")),
+                            )
+                 )
                  ),
         tabPanel("Social",
                  selectInput(NS(id,"SocialTripSelect"),
                              label = c("Neighborhood or Street Level Info?"),
                              choices = c("Neighborhood",
                                          "Street")
-                             )
+                             ),
+                 tabsetPanel(
+                   id = NS(id,"SocialTripParam"),
+                   type = "hidden",
+                   tabPanel("Neighborhood",
+                            selectInput(NS(id,"SocialDestHood"),
+                                        label = "Grocery Store Neighborhood",
+                                        choices = unique(hoods$hood),
+                                        selectize = TRUE
+                                        )
+                            ),
+                   tabPanel("Street",
+                            leafletOutput(NS(id,"SocialMap"))
+                            )
+                 )
                  ),
         "Review",
         tabPanel("Review and Submit",
-                 tableOutput(NS(id,"submit_table")),
-                 textInput(NS(id,"submit_code"),label = "Submission Code"),
-                 actionButton("submit",label = "Submit")
+                 tableOutput(NS(id,"SubmitTable")),
+                 textInput(NS(id,"SubmitCode"),label = "Submission Code"),
+                 actionButton("SubmitBtn",label = "Submit")
                  )
       )
     )
@@ -184,12 +228,130 @@ mod_TripEntry_server <- function(id){
              `"T" Familiarity` = input$lrailfamiliar,
              )
     })
-    output$submit_table <- renderTable({
-      df()
-    }, 
-    caption = "Respondent Background Information",
-    caption.placement = "top"
-    )
+    output$SubmitTable <- renderTable({df()}, 
+            caption = "Respondent Background Information",
+            caption.placement = "top"
+            )
+    origin_latlong <- reactive({
+      if(!is.null(input$subjhood))
+        out <- suppressWarnings(hoods %>% 
+          dplyr::filter(hood == input$subjhood) %>% 
+          sf::st_centroid() %>% 
+          sf::st_coordinates())
+      else
+        out <- c(-79.995352,40.440936)
+      return(out)
+      })
+    
+    output$GroceryMap <- renderLeaflet({
+        leaflet(hoods) %>%
+          addProviderTiles(providers$Stamen.TonerLite,
+                           options = providerTileOptions(noWrap = TRUE)) %>% 
+          setView(origin_latlong()[1],origin_latlong()[2], zoom = 12) %>% 
+            addPolygons(color = "#444444",
+                        weight = 1,
+                        smoothFactor = 0.5,
+                        opacity = 0.25,
+                        fillOpacity = 0.25,
+                        layerId = ~hood,
+                        data = hoods,
+                        options = pathOptions(clickable = FALSE),
+                        labelOptions = labelOptions(direction = 'auto'),
+                        highlightOptions = highlightOptions(color = "white",
+                                                            weight = 2,
+                                                            bringToFront = TRUE)
+            ) %>% 
+            addPolylines(color = "#444444",
+                         weight = 1.3,
+                         smoothFactor = 0.5,
+                         opacity = 0.80,
+                         layerId = ~OBJECTID,
+                         options = pathOptions(clickable = T),
+                         data = streets,
+                         labelOptions = labelOptions(direction = 'auto'),
+                         highlightOptions =
+                           highlightOptions(color = "white",
+                                            weight = 2,
+                                            bringToFront = TRUE)
+            )
+    })
+    output$CommuteMap <- renderLeaflet({
+        leaflet(hoods) %>%
+          addProviderTiles(providers$Stamen.TonerLite,
+                           options = providerTileOptions(noWrap = TRUE)) %>% 
+          setView(origin_latlong()[1],origin_latlong()[2], zoom = 12) %>% 
+            addPolygons(color = "#444444",
+                        weight = 1,
+                        smoothFactor = 0.5,
+                        opacity = 0.25,
+                        fillOpacity = 0.25,
+                        layerId = ~hood,
+                        data = hoods,
+                        options = pathOptions(clickable = FALSE),
+                        labelOptions = labelOptions(direction = 'auto'),
+                        highlightOptions = highlightOptions(color = "white",
+                                                            weight = 2,
+                                                            bringToFront = TRUE)
+            ) %>% 
+            addPolylines(color = "#444444",
+                         weight = 1.3,
+                         smoothFactor = 0.5,
+                         opacity = 0.80,
+                         layerId = ~OBJECTID,
+                         options = pathOptions(clickable = T),
+                         data = streets,
+                         labelOptions = labelOptions(direction = 'auto'),
+                         highlightOptions =
+                           highlightOptions(color = "white",
+                                            weight = 2,
+                                            bringToFront = TRUE)
+            )
+    })
+    output$SocialMap <- renderLeaflet({
+        leaflet(hoods) %>%
+          addProviderTiles(providers$Stamen.TonerLite,
+                           options = providerTileOptions(noWrap = TRUE)) %>% 
+          setView(origin_latlong()[1],origin_latlong()[2], zoom = 12) %>% 
+            addPolygons(color = "#444444",
+                        weight = 1,
+                        smoothFactor = 0.5,
+                        opacity = 0.25,
+                        fillOpacity = 0.25,
+                        layerId = ~hood,
+                        data = hoods,
+                        options = pathOptions(clickable = FALSE),
+                        labelOptions = labelOptions(direction = 'auto'),
+                        highlightOptions = highlightOptions(color = "white",
+                                                            weight = 2,
+                                                            bringToFront = TRUE)
+            ) %>% 
+            addPolylines(color = "#444444",
+                         weight = 1.3,
+                         smoothFactor = 0.5,
+                         opacity = 0.80,
+                         layerId = ~OBJECTID,
+                         options = pathOptions(clickable = T),
+                         data = streets,
+                         labelOptions = labelOptions(direction = 'auto'),
+                         highlightOptions =
+                           highlightOptions(color = "white",
+                                            weight = 2,
+                                            bringToFront = TRUE)
+            )
+    })
+    observeEvent(input$GroceryTripSelect, {
+      updateTabsetPanel(inputId = "GroceryTripParam",
+                        selected = input$GroceryTripSelect)
+    })
+    observeEvent(input$CommuteTripSelect, {
+      updateTabsetPanel(inputId = "CommuteTripParam",
+                        selected = input$CommuteTripSelect)
+    })
+    observeEvent(input$SocialTripSelect, {
+      updateTabsetPanel(inputId = "SocialTripParam",
+                        selected = input$SocialTripSelect)
+    })
+    
   })
 }
     
