@@ -16,21 +16,24 @@ This documentation is still under review. Be aware that the content may change.
 Check the github commit history for this project's [repo](github.com/apeterson91/ptpt)
 to see when changes are made.
 
-# Overview 
+# Introduction
 
-The methodology underlying the PTPT falls under two headings (1) Data Collection
-and (2) Substantive Questions. Data collection is laid out in three stages with 
-increasing difficulty and correspondingly higher quality data 
-associated with each successive stage. Methods for investigating substantive 
-questions develop in parallel to Data Collection; models and estimates 
-discussed under this heading should be available 
+This document discusses various topics underlying the Pittsburgh Transit
+Propensity Tool (PTPT) which fall under
+two headings: (1) Data Collection and (2) Substantive Questions. Data collection 
+is laid out in three stages with increasing difficulty and correspondingly 
+higher quality data associated with each successive stage. Methods for 
+investigating substantive questions develop in parallel to Data Collection; 
+models and estimates discussed under this heading are designed to be available 
 with minor adjustment for each of the three data stages. 
 These methods are understood to be open ended and falling under two headings: 
 (1) Descriptive and (2) Prescriptive. That is, methods are developed with the 
 intent to describe the current state of transit use in Pittsburgh, as well as to 
 "prescribe" in decision theoretic terms, what actions (interventions, 
 programs, etc.) may lead to a greater uptake in one mode of transit over 
-another.
+another. These ideas are discussed at a high level here with an emphasis on 
+clarity and accessibility over technical rigor. We provide more in-depth 
+information laid out in the sub sections of the "Analysis" tab.
 
 
 # Data Collection 
@@ -161,9 +164,9 @@ to test the mechanics underlying the PTPT and roll-up the online survey
 submission process associated with the PTPT as well as address any early 
 concerns that may arise in administering the online survey.
 
-From a technical standpoint, even though these data are not indepndent, there 
-is still much that can be learned from using these data, and we plan to utilize
-methods from the post-stratification literature 
+From a technical standpoint, even though these data are not explicitly 
+representative, there is still much that can be learned from using these data, 
+and we plan to utilize methods from the post-stratification literature 
 [@gelman2007struggles; @lumley2011complex] in order to derive estimates 
 that are more representative of the city.
 
@@ -177,12 +180,17 @@ and, the most difficult data to acquire for this project.
 
 # Substantive Questions
 
-## Propensity to transit - the estimand of interest
+## Propensity to transit 
 
 The primary estimand of interest and key indicator by which progress towards 
-the goal of non-car dependence is measured is the probability of an individual
-in the Pittsburgh area to use transit - a non-single passenger vehicle mode - 
-to complete a within-city (or potentially within-county) trip, $\pi_t$.
+the goal of non-car dependence is measured is the probability an individual
+in the Pittsburgh area uses transit - a non-single passenger vehicle mode of 
+travel - to complete a within-city (or potentially within-county) trip, $\pi$. 
+Estimates for this value are typically distinguished by the type of trip, e.g. 
+commute, which we denote $\pi_c$. According to US census data compiled by the 
+American League of Bicyclists, $\pi_c \approx 2$% [@mcleod_2016; @mcleod_2017]. 
+However, these figures are from 2017 and the coronavirus pandemic have 
+undoubtedly altered these numbers, as working from home is now a 
 
 
 ## Transit factors

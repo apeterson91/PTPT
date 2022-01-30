@@ -24,14 +24,15 @@ app_ui <- function(request) {
       ),
       tabPanel(
         "Methods",
-        mod_Methods_ui("MethodsPage")
+        mod_Methods_ui("Topics Overview")
                ),
       tabPanel(
         "Trip Entry",
          mod_TripEntry_ui("TripEntryPage")
                ),
       navbarMenu(
-        "Analyses",
+        "Analysis",
+        tabPanel("Data Collection",includeMarkdown("inst/app/www/DataCollection.md")),
         tabPanel("Advocacy",h3("Advocacy")),
         tabPanel("Education",h3("Education"))
                 )

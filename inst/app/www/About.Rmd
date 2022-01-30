@@ -29,20 +29,21 @@ use the PTPT in your work.
 The PTPT was designed to assist bike advocates, transport planners, and
 policy makers in the prioritization of advocacy, education, investments and 
 infrastructure to reduce car dependency in the city of Pittsburgh. Car 
-dependency here understood to mean, that a citizen *has* to have a car in order
+dependency here understood to mean, that a resident would be greatly 
+inconvenienced in their daily life by not having a car in order
 to have a reasonable expectation of fulfilling their basic needs: 
 getting their groceries, going to work and participating in social activities. 
 The PTPT answers the question "How and where do people travel across 
 Pittsburgh for these activities and where are the greatest opportunities to
 introduce new multi-modal transit interventions?" It is intended to supplement 
 and inform the work outlined in Pittsburgh's 
-[bike+](https://pittsburghpa.gov/domi/bikeplan) plan and inspire even more 
-transformational ideas about how to empower individuals to move around their 
-city safely, economically and quickly.
+[bike+](https://pittsburghpa.gov/domi/bikeplan) plan [@lucas_2020] and inspire 
+further transformational ideas about how to empower individuals to move 
+around their city safely, economically, sustainably and quickly.
 
 You can see the source code for this project on 
 [github](www.github.com/apeterson91/ptpt) and read more 
-about the technical ideas behind this work in the Methods tab or 
+about the technical ideas behind this work in the Topics Overview tab or 
 on the [xstreetvalidated](xstreetvalidated.com) blog.
 
 
