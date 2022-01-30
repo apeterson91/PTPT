@@ -138,7 +138,8 @@ mod_TripEntry_ui <- function(id){
                  selectInput(NS(id,"GroceryTripSelect"),
                              label = "Neighborhood or Street Level Info?",
                              choices = c("Neighborhood",
-                                         "Street")
+                                         "Street"),
+                             selected = "Street"
                              ),
                  tabsetPanel(
                    id = NS(id,"GroceryTripParam"),
@@ -152,6 +153,7 @@ mod_TripEntry_ui <- function(id){
                             ),
                    tabPanel("Street",
                             leafletOutput(NS(id,"GroceryMap")),
+                            renderDataTable(NS(id,"GroceryTable"))
                             )
                  )
                  ),
@@ -242,37 +244,36 @@ mod_TripEntry_server <- function(id){
         out <- c(-79.995352,40.440936)
       return(out)
       })
-    
+    stdf <- reactive({
+      hds <- hoods %>% 
+        sf::st_filter(sf::st_sfc(sf::st_point(origin_latlong())) %>% 
+                    sf::st_set_crs(4326),
+        .predicate = sf::st_is_within_distance, 
+        dist = 1000) %>% 
+        dplyr::pull(hood)
+      out <- streets %>% 
+        dplyr::filter(hood %in% hds) %>% 
+        dplyr::mutate(lid = stringr::str_c("street_",street_ix),
+                      sid = stringr::str_c("selected_",street_ix))
+      return(out)
+    })
+    # TODO: fix street segment selection - add drag and click if possible
     output$GroceryMap <- renderLeaflet({
-        leaflet(hoods) %>%
-          addProviderTiles(providers$Stamen.TonerLite,
-                           options = providerTileOptions(noWrap = TRUE)) %>% 
-          setView(origin_latlong()[1],origin_latlong()[2], zoom = 12) %>% 
-            addPolygons(color = "#444444",
-                        weight = 1,
-                        smoothFactor = 0.5,
-                        opacity = 0.25,
-                        fillOpacity = 0.25,
-                        layerId = ~hood,
-                        data = hoods,
-                        options = pathOptions(clickable = FALSE),
-                        labelOptions = labelOptions(direction = 'auto'),
-                        highlightOptions = highlightOptions(color = "white",
-                                                            weight = 2,
-                                                            bringToFront = TRUE)
-            ) %>% 
-            addPolylines(color = "#444444",
-                         weight = 1.3,
-                         smoothFactor = 0.5,
+        leaflet() %>%
+           addProviderTiles(providers$Stamen.TonerLite,
+                           options = providerTileOptions(noWrap = TRUE)) %>%
+          setView(origin_latlong()[1], origin_latlong()[2], zoom = 15) %>% 
+            addPolylines(color = "black",
+                         fillColor = "black",
+                         weight = 10,
                          opacity = 0.80,
-                         layerId = ~OBJECTID,
-                         options = pathOptions(clickable = T),
-                         data = streets,
-                         labelOptions = labelOptions(direction = 'auto'),
-                         highlightOptions =
-                           highlightOptions(color = "white",
-                                            weight = 2,
-                                            bringToFront = TRUE)
+                         group = "template",
+                         stroke = TRUE,
+                         options = pathOptions(clickable = TRUE),
+                        highlightOptions = highlightOptions(color = "white",
+                                                            weight = 2),
+                         layerId = ~lid,
+                         data = stdf() 
             )
     })
     output$CommuteMap <- renderLeaflet({
@@ -324,20 +325,22 @@ mod_TripEntry_server <- function(id){
                         highlightOptions = highlightOptions(color = "white",
                                                             weight = 2,
                                                             bringToFront = TRUE)
-            ) %>% 
+            ) %>%
             addPolylines(color = "#444444",
-                         weight = 1.3,
+                         weight = 2.5, 
                          smoothFactor = 0.5,
                          opacity = 0.80,
                          layerId = ~OBJECTID,
                          options = pathOptions(clickable = T),
                          data = streets,
+                         group = "template",
                          labelOptions = labelOptions(direction = 'auto'),
                          highlightOptions =
                            highlightOptions(color = "white",
                                             weight = 2,
-                                            bringToFront = TRUE)
+                                            bringToFront = TRUE) 
             )
+                         
     })
     observeEvent(input$GroceryTripSelect, {
       updateTabsetPanel(inputId = "GroceryTripParam",
@@ -352,6 +355,62 @@ mod_TripEntry_server <- function(id){
                         selected = input$SocialTripSelect)
     })
     
+    selected <- reactiveValues(ids = vector())
+    hltstdf <- reactive({
+      stdf() %>% 
+        dplyr::filter(lid %in% selected$ids)
+    })
+    
+    observeEvent(input$GroceryMap_shape_click, {
+      
+      click <- input$GroceryMap_shape_click
+      
+      proxy <- leafletProxy("GroceryMap")
+      
+      selected$ids <- c(selected$ids, click$id)
+      
+      if(click$id %in% hltstdf()$sid){
+        
+        removeid <- hltstdf() %>% 
+          dplyr::filter(sid == click$id) %>% 
+          dplyr::pull(lid)
+        selected$ids <- setdiff(selected$ids,removeid)
+        
+        proxy %>% removeShape(layerId = click$id)
+        
+      } else {
+        proxy %>% 
+          addPolylines(data = hltstdf(),
+                       fillColor = "red",
+                       fillOpacity = .8,
+                       weight = 15,
+                       color = 'red',
+                       stroke = TRUE,
+                       layerId = ~sid)
+      }
+      
+      })
+      
+      output$GroceryTable <- DT::renderDataTable(
+        dstdf()
+      )
+      
+      observeEvent(input$SubmitBtn,{
+        session$sendCustomMessage(type = "testmessage",
+                                  message = paste0("Congrats!",
+                                  "This button does nothing")
+        )
+      })
+      
+      dstdf <- reactive({
+       DT::datatable(
+         dplyr::tibble(order_ix = 1:n(),
+                       OBJECTID = selected$id) %>% 
+           dplyr::left_join(streets %>% 
+                              st_drop_geometry() %>% 
+                              select(OBJECTID,FULL_NAME))
+       )
+    })
   })
 }
     
