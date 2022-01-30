@@ -16,6 +16,7 @@
 ## Dependencies ----
 ## Add one line by package you want to add as dependency
 usethis::use_package("leaflet")
+usethis::use_package("ggplot2")
 usethis::use_package("dplyr")
 usethis::use_package("sf")
 usethis::use_package("shinyjs")
@@ -37,7 +38,8 @@ golem::add_module(name = "TripEntry")
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
-golem::add_fct( "helpers" ) 
+golem::add_fct( "helpers") 
+golem::add_fct("TripEntry")
 golem::add_utils( "helpers" )
 
 ## External resources

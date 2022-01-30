@@ -32,8 +32,8 @@ app_ui <- function(request) {
                ),
       navbarMenu(
         "Analysis",
-        tabPanel("Data Collection",includeMarkdown("inst/app/www/DataCollection.md")),
-        tabPanel("Advocacy",h3("Advocacy")),
+        tabPanel("Data Collection",includeMarkdown("inst/app/www/DataCollection.Rmd")),
+        tabPanel("Advocacy",mod_Advocacy_Analysis_ui("AdvocacyAnalysis")),
         tabPanel("Education",h3("Education"))
                 )
     )

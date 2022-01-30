@@ -1,4 +1,4 @@
-#' Analysis UI Function
+#' Advocacy Analysis UI Function
 #'
 #' @description A shiny Module.
 #'
@@ -7,19 +7,40 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
-mod_Analysis_ui <- function(id){
+mod_Advocacy_Analysis_ui <- function(id){
   ns <- NS(id)
   tagList(
- 
+    navlistPanel(
+      "Description",
+      tabPanel("Big Picture"),
+      tabPanel("Technical"),
+      "Analysis",
+      tabPanel("Food Accessibility",
+               plotOutput(NS(id,"foodplot"))
+               )
+    )
   )
 }
     
-#' Analysis Server Functions
+#' Advocacy Analysis Server Functions
 #'
 #' @noRd 
-mod_Analysis_server <- function(id){
+mod_Advocacy_Analysis_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+    
+    output$foodplot <- renderPlot({
+      hptt %>% 
+        dplyr::filter(purpose == "groceries") %>% 
+        ## TODO: redo hptt construction and join duration
+        ## use here
+        ggplot2::ggplot(ggplot2::aes(x = Income,
+                   y = bodds)) + 
+        ggplot2::geom_point()  +
+        ggplot2::geom_smooth() + 
+        ggplot2::xlab("Age") + 
+        ggplot2::ylab("Probability of Biking")
+    })
  
   })
 }

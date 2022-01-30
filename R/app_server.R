@@ -8,5 +8,5 @@ app_server <- function( input, output, session ) {
 
     mod_DisplayMap_server("DisplayMap")
     mod_TripEntry_server("TripEntryPage")
-    
+    mod_Advocacy_Analysis_server("AdvocacyAnalysis")
 }

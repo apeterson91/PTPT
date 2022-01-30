@@ -38,45 +38,9 @@ information laid out in the sub sections of the "Analysis" tab.
 
 # Data Collection 
 
-Before explaining the strategy behind each stage of data collection we introduce
-notation so that the technical reader can identify consistent terms 
-across all stages of data collection and methods.
 
-Consider the $i$th PGH resident, $(i=1,...,N)$ who performs each of $K$ trips 
-on a regular basis, say a typical week. We assume, to start, that the mode of 
-transit is fixed per trip - a person **only** walks (for example) to the 
-grocery store. The mode of transit for the $i$th resident is denoted as $m_i$,
-where $m_i \in \{1,...,M\}$ and $M$ is the total possible modes of transit. 
-This resident may also have certain characteristics, such as race, income, etc.
-that may be relevant to understanding their mode choice. We denote the 
-vector of these $p$ characteristics as $Z_i \in \mathbb{R}^{p}$. Similarly,
-we measure route-specific characteristics, $X_i \in \mathbb{R}^q$, which 
-may include the difference in expected travel time to a given destination
-between biking and driving.
+## Stage 1: Simulated Data
 
-With this preliminary notation aside, we now describe how these data are 
-collected or generated in each of the three stages constituting the PTPT's 
-development.
-
-## Stage 1: Simulated Data {.tabset}
-
-
-```{r dtbl, echo = FALSE}
-tibble(`Organization` = c("WPRDC","WPRDC","WPRDC",
-                         "WPRDC","WPRDC",
-                         "OSM","OSM"),
-       `Dataset` = c("Neighborhood Boundaries",
-                       "Street Lines",
-                       "Bike Lines",
-                       "Zoning Boundaries",
-                       "Land Parcels",
-                       "Grocery Store Locations",
-                       "Trip Routes/Times"
-                       )) %>% 
-    gt(caption = "Table 1") %>% 
-    tab_header("Data Sources used in the PTPT")
-```
-### Big Picture
 
 The first stage of data "collection" for the PTPT is generating simulated data. 
 There are several reasons for this. To begin with, simulating data is cheap and 
@@ -103,57 +67,6 @@ grocery trip. These two will be of primary focus to better reflect both the
 transit reality of Pittsburghers as well as the likely reality of future data 
 collection - clustered sampling - to which we now turn in greater detail
 in the next section.
-
-
-### Technical
-
-We follow previous work in the transit literature by simulating data under a 
-discrete choice model framework [ben1985discrete; @paez2008discrete; goetzke2008].
-Specifically we generate $m_i \in \{\text{Bike},\text{Walk},\text{Drive}\}$, 
-where the odds of biking and walking to a destination are modeled on a logit 
-scale as a function of both subject level characteristics, $Z_i$, and route 
-specific characteristics $X_i$, which include the difference in estimated 
-trip time duration between biking/walking and driving, or, in the future, 
-the perceived physical difficulty of the route measured by e.g. 
-average route gradient. The general model is then,
-
-\begin{equation}
-m_i | X_i,Z_i \sim \text{Multinomial}(\pi^{b}_i,\pi^w_i,\pi_i^d) \\
-\log(\frac{\pi_i^b}{\pi_i^d}) = \alpha_b + f_b(X_i) + g_b(Z_i)\\
-\log(\frac{\pi_i^w}{\pi_i^d}) = \alpha_w + f_w(X_i) + g_w(Z_i),
-(\#eq:s1model)
-\end{equation}
-
-where $\pi_i^b,\pi_i^w,\pi_i^d$ are the respective probabilities of the $i$th 
-person biking, walking or driving to a destination, respectively, and 
-$f_*(X_i)$^{the asterik here refers to either the biking or walking function} 
-and $g_*(Z_i)$ are the unknown functions of person and route 
-specific traits that influence an individual's propensity to bike or walk
-instead of drive to a specific destination. For example, it is likely the 
-case that one may be more inclined to bike or walk to a destination if the 
-difference between walking and driving is small and the overall trip time is 
-expected to be low, to reduce the hassle of driving and parking. However this 
-inclination will rapidly decline as the difference increases and the overall 
-absolute trip time increases. Consequently, we formulate this understanding
-by having $g_*(\cdot)$ be an exponential function of the aforementioned 
-quantities. 
-
-For a full understanding of how the data are generated we encourage the 
-interested reader to see the code in the `data_raw/` folder in this 
-project's [github repo](https://github.com/apeterson91/PTPT).
-
-#### Known omissions
-
-The modeling framework described above contains a number of known omissions 
-we briefly enumerate here and leave for future version updates of stage 1 of 
-the PTPT. The first is the omission of social dependency effects in the mean
-function of \@ref(eq:s1model) and explored in [@paez2008discrete; @goetzke2008].
-Future versions of the PTPT will look to incorporate these effects.
-
-While not explicitly an omission, a final weakness associated with simulated
-data we acknowledge is that the data are *not* observations of individuals 
-making decisions about how to move about Pittsburgh. Our second stage dataset
-addresses this concern and builds upon the previous work laid out in stage 1.
 
 ## Stage 2: Convenience Sample  
 
@@ -189,8 +102,6 @@ travel - to complete a within-city (or potentially within-county) trip, $\pi$.
 Estimates for this value are typically distinguished by the type of trip, e.g. 
 commute, which we denote $\pi_c$. According to US census data compiled by the 
 American League of Bicyclists, $\pi_c \approx 2$% [@mcleod_2016; @mcleod_2017]. 
-However, these figures are from 2017 and the coronavirus pandemic have 
-undoubtedly altered these numbers, as working from home is now a 
 
 
 ## Transit factors
