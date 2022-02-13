@@ -31,15 +31,13 @@ mod_Advocacy_Analysis_server <- function(id){
     
     output$foodplot <- renderPlot({
       hptt %>% 
+        dplyr::select(IncomeCat,purpose,bike,car,foot) %>% 
+        tidyr::gather(bike,car,foot,key = "mode",value = "duration") %>% 
         dplyr::filter(purpose == "groceries") %>% 
-        ## TODO: redo hptt construction and join duration
-        ## use here
-        ggplot2::ggplot(ggplot2::aes(x = Income,
-                   y = bodds)) + 
-        ggplot2::geom_point()  +
-        ggplot2::geom_smooth() + 
-        ggplot2::xlab("Age") + 
-        ggplot2::ylab("Probability of Biking")
+        ggplot2::ggplot(ggplot2::aes( duration, color = IncomeCat)) + 
+        ggplot2::geom_density() + 
+        ggplot2::xlab("Duration to Grocery Story (minutes)") + 
+        ggplot2::facet_grid(~ mode)
     })
  
   })

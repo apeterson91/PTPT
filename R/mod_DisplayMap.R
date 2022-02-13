@@ -30,6 +30,7 @@ mod_DisplayMap_ui <- function(id){
                              span(class = "glyphicon glyphicon-circle-arrow-up",
                                   "Hide")
                          )),
+                ## TODO: have check so one mode of transit is always selected.
                 div(id = NS(id,"input_panel"),
                     tags$div(title = "Trip purpose",
                     selectInput(NS(id,"transitpurpose"), "Trip purpose:", purposes,
@@ -110,11 +111,24 @@ mod_DisplayMap_server <- function(id){
         dplyr::rename(hood = origin_hood)
      leafletProxy("DisplayMap") %>%
         addLegend("topleft",
-                  colors = get_color_palette(zcolorscale,4),
-                  labels = get_labels(df$transit,4),
+                  colors = getColorPalette(zcolorscale,10),
+                  labels = getLabels(prop_hood()$transit),
                   layerId = "hood",
                   title = "% Transit",
                   opacity = .5)
+    })
+    
+    # hood popup
+    observe({
+      event <- input$DisplayMap_shape_click
+      if(is.null(event))
+        return()
+      leafletProxy("DisplayMap") %>%
+        clearPopups() %>% 
+        flyTo(lng = event$lng,
+              lat = event$lat,
+              zoom = 15)
+      showHoodPopup(prop_hood(), event$id, event$lat, event$lng)
     })
 
     ## Map polygons
@@ -152,9 +166,7 @@ mod_DisplayMap_server <- function(id){
        }
      })
      
-     observe({
-       proxy <- leafletProxy("DisplayMap")
-       if(input$geography == "neighborhoods"){
+     prop_hood <-  reactive({
          denom <- hptt %>% 
            dplyr::filter(stringr::str_detect(purpose,
                                              paste(input$transitpurpose,
@@ -167,24 +179,34 @@ mod_DisplayMap_server <- function(id){
          df <- hoods %>% 
            dplyr::select(hood) %>% 
            dplyr::left_join(hptt %>%
-                              dplyr::rename(hood = origin_hood) %>% 
+                            dplyr::rename(hood = origin_hood) %>% 
                             dplyr::filter(stringr::str_detect(mode,
                                                        paste(input$transitmode,
                                                              collapse = "|")),
                                           stringr::str_detect(purpose,
                                                 paste(input$transitpurpose,
                                                       collapse = "|"))) %>%
-                            dplyr::distinct(hood,subject_hood_id) %>%
-                            dplyr::left_join(denom, by = "hood") %>% 
+                            dplyr::distinct(hood, subject_hood_id) %>%
                             dplyr::group_by(hood) %>%
-                            dplyr::summarize(transit = round(100 *
-                                                               (dplyr::n() /
-                                                                hood_denom), 
-                                                             2 )) %>% 
+                            dplyr::count() %>% 
+                            dplyr::left_join(denom, by = "hood") %>% 
+                            dplyr::summarize(transit = round(
+                              100 * (n / hood_denom), 2 
+                              )
+                            ) %>% 
                             dplyr::ungroup(),
                             by = "hood"
-         ) %>%  
+           ) %>%
+           dplyr::mutate(transit = tidyr::replace_na(transit, 0),
+                         transit_labels = placeLabels(transit)) %>%
            sf::st_as_sf()
+         
+         return(df)
+     })
+     
+     observe({
+       proxy <- leafletProxy("DisplayMap")
+       if(input$geography == "neighborhoods"){
          proxy %>% 
             clearShapes() %>% 
             addPolygons(color = "#444444",
@@ -193,14 +215,15 @@ mod_DisplayMap_server <- function(id){
                         opacity = 1.0,
                         fillOpacity = 0.5,
                         layerId = ~hood,
-                        data = df,
+                        data = prop_hood(),
                         options = pathOptions(clickable = T),
                         labelOptions = labelOptions(direction = 'auto'),
                         highlightOptions = highlightOptions(color = "white",
                                                             weight = 2,
                                                             bringToFront = TRUE),
                         ## TODO what to do when breaks are not unique?
-                        fillColor = ~colorBin("RdYlBu",transit,bins = 4)(transit)
+                        fillColor = ~colorFactor("RdYlBu",
+                                                 transit_labels)(transit_labels)
             )
        }
      })

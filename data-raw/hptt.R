@@ -30,8 +30,7 @@ diffdf <- s1tdf %>%
     mutate(fcdiff = foot - car,
            fcpdiff = (fcdiff / car)*100,
            bcdiff = bike - car,
-           bcpdiff = (bcdiff / car )*100) %>% 
-    select(-bike,-car,-foot)
+           bcpdiff = (bcdiff / car )*100)
 
 
     

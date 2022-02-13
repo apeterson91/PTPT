@@ -18,6 +18,7 @@
 usethis::use_package("leaflet")
 usethis::use_package("ggplot2")
 usethis::use_package("dplyr")
+usethis::use_package("tidyr")
 usethis::use_package("sf")
 usethis::use_package("shinyjs")
 usethis::use_package("vroom")
