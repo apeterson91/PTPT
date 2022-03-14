@@ -23,7 +23,6 @@ showHoodPopup <- function(df, id, lat, lng){
     transit <- df %>% 
         dplyr::filter(hood == {{id}}) %>%
         dplyr::pull(transit)
-    print(df %>% dplyr::filter(hood == {{id}}))
     transit_string <- stringr::str_c("% Transit: ", transit)
     content <- as.character(tagList(
         tags$h4(id),
@@ -48,7 +47,7 @@ placeLabels <- function(transitprop){
             "10-14 %","15-19 %","20-24 %",
             "25-29 %","30-39 %","40 %+") 
     transitprop <- round(transitprop)
-    out <- case_when(transitprop <= 1 ~ lbls[1],
+    out <- dplyr::case_when(transitprop <= 1 ~ lbls[1],
               transitprop > 1 & transitprop <= 3 ~ lbls[2],
               transitprop > 3 & transitprop <= 6 ~ lbls[3],
               transitprop > 5 & transitprop <= 9 ~ lbls[4],

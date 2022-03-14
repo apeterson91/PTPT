@@ -11,13 +11,13 @@
 <h1>Data Collection</h1>
 <div id="stage-1-simulated-data" class="section level2">
 <h2>Stage 1: Simulated Data</h2>
-<p>The first stage of data “collection” for the PTPT is generating simulated data. There are several reasons for this. To begin with, simulating data is cheap and quick while still providing some semblance of realism. Indeed, using the wealth of data sources available through the <a href="http://www.wprdc.org/">WPRDC</a> as well as American Community Survey data available through the <a href="https://www.census.gov/programs-surveys/acs">census</a>, open source data available through <a href="https://www.openstreetmap.org/">openstreetmap</a>, elevation data provided by <a href="https://earthdata.nasa.gov/esds/competitive-programs/measures/nasadem">NASA</a>, and more that can be seen in Table 1, simulated data offer us the chance to quickly summon various scenarios of how transit behavior may vary amongst Pittsburgh residents. To this end, we sample 100 fictitious residents across the 88 neighborhoods of Pittsburgh, assign them a random residential parcel and generate three trips - grocery, commute and social - by three modes of transit - walking, biking and driving a personal vehicle. From these we then generate a mode of transit using a discrete choice model. See the Technical Tab for further details.</p>
+<p>The first stage of data “collection” for the PTPT is generating simulated data. There are several reasons for this. To begin with, simulating data is cheap and quick while still providing some semblance of realism. Indeed, using the wealth of data sources available through the <a href="http://www.wprdc.org/">WPRDC</a> as well as American Community Survey data available through the <a href="https://www.census.gov/programs-surveys/acs">census</a>, open source data available through <a href="https://www.openstreetmap.org/">openstreetmap</a>, elevation data provided by <a href="https://earthdata.nasa.gov/esds/competitive-programs/measures/nasadem">NASA</a>, and more that can be seen in Table 1, simulated data offer us the chance to quickly summon various scenarios of how transit behavior may vary amongst Pittsburgh residents. To this end, we sample 100 fictitious residents across the 88 neighborhoods of Pittsburgh, assign them a random residential parcel and generate three trips - grocery, commute and social - by three modes of transit - walking, biking and driving a personal vehicle. From these we then generate a mode of transit using a discrete choice model. See the Analysis Tab for further details.</p>
 <p>Further work in generating data will incorporate further modes of transit, and hypothetical modes of data collection that account for shared household trips, e.g. two subject participants make two different commute trips, but one shared grocery trip. These two will be of primary focus to better reflect both the transit reality of Pittsburghers as well as the likely reality of future data collection - clustered sampling - to which we now turn in greater detail in the next section.</p>
 </div>
 <div id="stage-2-convenience-sample" class="section level2">
 <h2>Stage 2: Convenience Sample</h2>
 <p>Data collected in stage 2 represent a convenience sample drawn from members of Bike PGH’s neighborhood advocacy network. While certainly <strong>not</strong> a random sample of the greater Pittsburgh community, this sample does offer the chance to test the mechanics underlying the PTPT and roll-up the online survey submission process associated with the PTPT as well as address any early concerns that may arise in administering the online survey.</p>
-<p>From a technical standpoint, even though these data are not explicitly representative, there is still much that can be learned from using these data, and we plan to utilize methods from the post-stratification literature <span class="citation">(Gelman 2007; Lumley 2011)</span> in order to derive estimates that are more representative of the city.</p>
+<p>From a technical standpoint, even though these data are not explicitly representative, there is still much that can be learned from using these data, and we plan to utilize methods from the survey literature <span class="citation">(Gelman 2007; Lumley 2011)</span> in order to derive estimates that are more representative of the city.</p>
 </div>
 <div id="stage-3-designed-sample" class="section level2">
 <h2>Stage 3: Designed Sample</h2>
@@ -28,15 +28,12 @@
 <h1>Substantive Questions</h1>
 <div id="propensity-to-transit" class="section level2">
 <h2>Propensity to transit</h2>
-<p>The primary estimand of interest and key indicator by which progress towards the goal of non-car dependence is measured is the probability an individual in the Pittsburgh area uses transit - a non-single passenger vehicle mode of travel - to complete a within-city (or potentially within-county) trip, <span class="math inline">\(\pi\)</span>. Estimates for this value are typically distinguished by the type of trip, e.g.  commute, which we denote <span class="math inline">\(\pi_c\)</span>. According to US census data compiled by the American League of Bicyclists, <span class="math inline">\(\pi_c \approx 2\)</span>% <span class="citation">(Mcleod, Murphy, and Halupka 2016; Mcleod 2017)</span>.</p>
+<p>The primary estimand of interest and key indicator by which progress towards the goal of non-car dependence is measured is the probability an individual in the Pittsburgh area uses transit - a non-single passenger vehicle mode of travel - to complete a within-city (or potentially within-county) trip. Estimates for this value are typically distinguished by the type of trip, e.g.  commute. According to US census data compiled by the American League of Bicyclists the proportion of pittsburgh residents cycling to commute is approximately 2% <span class="citation">(Mcleod, Murphy, and Halupka 2016; Mcleod 2017)</span>. It is much more difficult to get estimates of the number of individuals using some combination of transit and walking or solely walking to commute let alone any estimates of individual’s mode of transit taken for other vital trips such as getting groceries, or attending social/cultural events.</p>
 </div>
 <div id="transit-factors" class="section level2">
 <h2>Transit factors</h2>
-<p>In addition to estimating <span class="math inline">\(\pi_t\)</span> we are interested in what factors influence <span class="math inline">\(\pi_t\)</span>. These include the functions <span class="math inline">\(f_*(X_i)\)</span> and <span class="math inline">\(g_*(Z_i)\)</span> described earlier.</p>
+<p>In addition to estimating the propensity to transit we are also interested in what factors influence this quantity. This include physical factors, such as the bike lanes, bus ways and other infrastructure that define spaces where cyclists and bus passengers are able to feel safest or obtain their most efficient travel, as well as social factors, such as the knowledge of “how to” ride a bike, or social peers that also ride bikes. Understanding these factors can be critical for motivating and guiding a transition away from a car-dominant transit landscape to a more resilient multi-modal landscape.</p>
 </div>
-</div>
-<div id="discussion" class="section level1">
-<h1>Discussion</h1>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
@@ -45,7 +42,7 @@
 Gelman, Andrew. 2007. <span>“Struggles with Survey Weighting and Regression Modeling.”</span> <em>Statistical Science</em> 22 (2): 153–64.
 </div>
 <div id="ref-lumley2011complex" class="csl-entry">
-Lumley, Thomas. 2011. <em>Complex Surveys: A Guide to Analysis Using r</em>. Vol. 565. John Wiley &amp; Sons.
+Lumley, Thomas. 2011. <em>Complex Surveys: A Guide to Analysis Using <span>R</span></em>. Vol. 565. John Wiley &amp; Sons.
 </div>
 <div id="ref-mcleod_2017" class="csl-entry">
 Mcleod, Ken. 2017. <em>Where We Ride</em>. American League of Bicyclists.

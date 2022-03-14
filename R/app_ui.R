@@ -26,10 +26,10 @@ app_ui <- function(request) {
         "Methods",
         mod_Methods_ui("Topics Overview")
                ),
-      tabPanel(
-        "Trip Entry",
-         mod_TripEntry_ui("TripEntryPage")
-               ),
+      # tabPanel(
+      #   "Trip Entry",
+      #    mod_TripEntry_ui("TripEntryPage")
+      #          ),
       navbarMenu(
         "Analysis",
         tabPanel("Data Collection",includeMarkdown("inst/app/www/DataCollection.Rmd")),

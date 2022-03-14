@@ -39,7 +39,11 @@ introduce new multi-modal transit interventions?" It is intended to supplement
 and inform the work outlined in Pittsburgh's 
 [bike+](https://pittsburghpa.gov/domi/bikeplan) plan [@lucas_2020] and inspire 
 further transformational ideas about how to empower individuals to move 
-around their city safely, economically, sustainably and quickly.
+around their city safely, economically, sustainably and quickly. Previous 
+sources of data in this area include the 
+[American Community Survey](https://www.census.gov/topics/employment/commuting.html) and the 
+[makemytripcount](https://www.makemytripcount.org/) survey, though neither 
+capture the level of granularity in purpose and destination that this work does.
 
 You can see the source code for this project on 
 [github](www.github.com/apeterson91/ptpt) and read more 
@@ -48,9 +52,3 @@ on the [xstreetvalidated](xstreetvalidated.com) blog.
 
 
 # References
-
-
-
-
-
-

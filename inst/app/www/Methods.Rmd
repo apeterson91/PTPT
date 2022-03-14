@@ -57,7 +57,7 @@ amongst Pittsburgh residents. To this end, we sample 100 fictitious residents
 across the 88 neighborhoods of Pittsburgh, assign them a random residential 
 parcel and generate three trips - grocery, commute and social - by three modes 
 of transit - walking, biking and driving a personal vehicle. From these we then 
-generate a mode of transit using a discrete choice model. See the Technical Tab 
+generate a mode of transit using a discrete choice model. See the Analysis Tab 
 for further details.
 
 Further work in generating data will incorporate further modes of transit, and 
@@ -79,7 +79,7 @@ concerns that may arise in administering the online survey.
 
 From a technical standpoint, even though these data are not explicitly 
 representative, there is still much that can be learned from using these data, 
-and we plan to utilize methods from the post-stratification literature 
+and we plan to utilize methods from the survey literature 
 [@gelman2007struggles; @lumley2011complex] in order to derive estimates 
 that are more representative of the city.
 
@@ -98,20 +98,29 @@ and, the most difficult data to acquire for this project.
 The primary estimand of interest and key indicator by which progress towards 
 the goal of non-car dependence is measured is the probability an individual
 in the Pittsburgh area uses transit - a non-single passenger vehicle mode of 
-travel - to complete a within-city (or potentially within-county) trip, $\pi$. 
+travel - to complete a within-city (or potentially within-county) trip. 
 Estimates for this value are typically distinguished by the type of trip, e.g. 
-commute, which we denote $\pi_c$. According to US census data compiled by the 
-American League of Bicyclists, $\pi_c \approx 2$% [@mcleod_2016; @mcleod_2017]. 
+commute. According to US census data compiled by the 
+American League of Bicyclists the proportion of 
+pittsburgh residents cycling to commute is approximately 2% 
+[@mcleod_2016; @mcleod_2017]. It is much more difficult to get estimates of
+the number of individuals using some combination of transit and walking
+or solely walking to commute let alone any estimates of individual's 
+mode of transit taken for other vital trips such as getting groceries, or 
+attending social/cultural events.
 
 
 ## Transit factors
 
-In addition to estimating $\pi_t$ we are interested in what factors influence
-$\pi_t$. These include the functions $f_*(X_i)$ and $g_*(Z_i)$ described 
-earlier.
+In addition to estimating the propensity to transit we are also interested in 
+what factors influence this quantity. This include physical factors, such as
+the bike lanes, bus ways and other infrastructure that define spaces where 
+cyclists and bus passengers are able to feel safest or obtain their most 
+efficient travel, as well as social factors, such as the knowledge of 
+"how to" ride a bike, or social peers that also ride bikes. Understanding
+these factors can be critical for motivating and guiding a transition away
+from a car-dominant transit landscape to a more resilient multi-modal landscape.
 
-
-# Discussion 
 
 
 

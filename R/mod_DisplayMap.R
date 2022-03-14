@@ -45,7 +45,7 @@ mod_DisplayMap_ui <- function(id){
                 tags$div(title = "Transit Mode",
                          checkboxGroupInput(NS(id,"transitmode"),
                                             "Mode",
-                                            selected = "bike",
+                                            selected = c("bike","foot"),
                                             choiceNames = list(icon("bicycle"),
                                                                icon("walking"),
                                                                # icon("bus"),
