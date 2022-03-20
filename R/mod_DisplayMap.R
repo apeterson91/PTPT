@@ -37,22 +37,29 @@ mod_DisplayMap_ui <- function(id){
                                 selected = "commute",
                                 multiple = TRUE,
                                  selectize = FALSE)),
-                tags$div(title = "Geography",
-                         selectInput(NS(id,"geography"),
-                                     "Geography:",
-                                     geographies,
-                                     selectize =  FALSE)),
+                ## TODO: determine how to use street/ transit lines going 
+                ## forward
+                # tags$div(title = "Geography",
+                #          selectInput(NS(id,"geography"),
+                #                      "Geography:",
+                #                      geographies,
+                #                      selectize =  FALSE)),
                 tags$div(title = "Transit Mode",
                          checkboxGroupInput(NS(id,"transitmode"),
                                             "Mode",
                                             selected = c("bike","foot"),
                                             choiceNames = list(icon("bicycle"),
+                                                               ## Not yet
+                                                               # icon("bolt"),
                                                                icon("walking"),
+                                                               ## Not yet
                                                                # icon("bus"),
                                                                ## Not yet
                                                                # icon("train"),
                                                                icon("car")),
                                             choiceValues = c("bike",
+                                                               ## Not yet
+                                                             # "ebike",
                                                              "foot",
                                                              # "bus",
                                                              # "train",
@@ -134,36 +141,36 @@ mod_DisplayMap_server <- function(id){
     ## Map polygons
      observe({
        proxy <- leafletProxy("DisplayMap")
-       if(input$geography == "streets"){
-         proxy %>% 
-           clearShapes() %>% 
-            addPolygons(color = "#444444",
-                        weight = 1,
-                        smoothFactor = 0.5,
-                        opacity = 0.25,
-                        fillOpacity = 0.25,
-                        layerId = ~hood,
-                        data = hoods,
-                        options = pathOptions(clickable = FALSE),
-                        labelOptions = labelOptions(direction = 'auto'),
-                        highlightOptions = highlightOptions(color = "white",
-                                                            weight = 2,
-                                                            bringToFront = TRUE)
-            ) %>% 
-            addPolylines(color = "#444444",
-                         weight = 1.3,
-                         smoothFactor = 0.5,
-                         opacity = 0.80,
-                         layerId = ~OBJECTID,
-                         options = pathOptions(clickable = T),
-                         data = streets,
-                         labelOptions = labelOptions(direction = 'auto'),
-                         highlightOptions =
-                           highlightOptions(color = "white",
-                                            weight = 2,
-                                            bringToFront = TRUE)
-            )
-       }
+       # if(input$geography == "streets"){
+       #   proxy %>% 
+       #     clearShapes() %>% 
+       #      addPolygons(color = "#444444",
+       #                  weight = 1,
+       #                  smoothFactor = 0.5,
+       #                  opacity = 0.25,
+       #                  fillOpacity = 0.25,
+       #                  layerId = ~hood,
+       #                  data = hoods,
+       #                  options = pathOptions(clickable = FALSE),
+       #                  labelOptions = labelOptions(direction = 'auto'),
+       #                  highlightOptions = highlightOptions(color = "white",
+       #                                                      weight = 2,
+       #                                                      bringToFront = TRUE)
+       #      ) %>% 
+       #      addPolylines(color = "#444444",
+       #                   weight = 1.3,
+       #                   smoothFactor = 0.5,
+       #                   opacity = 0.80,
+       #                   layerId = ~OBJECTID,
+       #                   options = pathOptions(clickable = T),
+       #                   data = streets,
+       #                   labelOptions = labelOptions(direction = 'auto'),
+       #                   highlightOptions =
+       #                     highlightOptions(color = "white",
+       #                                      weight = 2,
+       #                                      bringToFront = TRUE)
+       #      )
+       # }
      })
      
      prop_hood <-  reactive({
@@ -206,7 +213,7 @@ mod_DisplayMap_server <- function(id){
      
      observe({
        proxy <- leafletProxy("DisplayMap")
-       if(input$geography == "neighborhoods"){
+       # if(input$geography == "neighborhoods"){
          proxy %>% 
             clearShapes() %>% 
             addPolygons(color = "#444444",
@@ -225,7 +232,7 @@ mod_DisplayMap_server <- function(id){
                         fillColor = ~colorFactor("RdYlBu",
                                                  transit_labels)(transit_labels)
             )
-       }
+       # }
      })
   })
 }

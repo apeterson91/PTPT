@@ -12,11 +12,10 @@ mod_Advocacy_Analysis_ui <- function(id){
   tagList(
     navlistPanel(
       "Description",
-      tabPanel("Big Picture"),
-      tabPanel("Technical"),
+      tabPanel("Big Picture", includeMarkdown("inst/app/www/AnalysisPicture.md")),
       "Analysis",
-      tabPanel("Food Accessibility",
-               plotOutput(NS(id,"foodplot"))
+      tabPanel("Propensity to Transit",
+               plotOutput(NS(id,"probplot"))
                )
     )
   )
@@ -29,15 +28,19 @@ mod_Advocacy_Analysis_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    output$foodplot <- renderPlot({
+    output$probplot <- renderPlot({
       hptt %>% 
-        dplyr::select(IncomeCat,purpose,bike,car,foot) %>% 
-        tidyr::gather(bike,car,foot,key = "mode",value = "duration") %>% 
-        dplyr::filter(purpose == "groceries") %>% 
-        ggplot2::ggplot(ggplot2::aes( duration, color = IncomeCat)) + 
-        ggplot2::geom_density() + 
-        ggplot2::xlab("Duration to Grocery Story (minutes)") + 
-        ggplot2::facet_grid(~ mode)
+        dplyr::mutate(multi_modal = ifelse(mode %in% c("bike", "foot"), 
+                                                  1, 0)) %>% 
+        ggplot2::ggplot(ggplot2::aes(x = Income,
+                   y = multi_modal,
+                   color = purpose)) + 
+        binomial_smooth() + 
+        ggplot2::theme_bw() + 
+        ggplot2::theme(legend.title = ggplot2::element_blank()) + 
+        ggplot2::ylab("Probability of Non-Car Transit") + 
+        ggplot2::scale_y_continuous(labels = scales::percent) + 
+        ggplot2::xlab("Income in 1000's USD")
     })
  
   })

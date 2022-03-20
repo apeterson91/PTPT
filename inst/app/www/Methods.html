@@ -11,7 +11,7 @@
 <h1>Data Collection</h1>
 <div id="stage-1-simulated-data" class="section level2">
 <h2>Stage 1: Simulated Data</h2>
-<p>The first stage of data “collection” for the PTPT is generating simulated data. There are several reasons for this. To begin with, simulating data is cheap and quick while still providing some semblance of realism. Indeed, using the wealth of data sources available through the <a href="http://www.wprdc.org/">WPRDC</a> as well as American Community Survey data available through the <a href="https://www.census.gov/programs-surveys/acs">census</a>, open source data available through <a href="https://www.openstreetmap.org/">openstreetmap</a>, elevation data provided by <a href="https://earthdata.nasa.gov/esds/competitive-programs/measures/nasadem">NASA</a>, and more that can be seen in Table 1, simulated data offer us the chance to quickly summon various scenarios of how transit behavior may vary amongst Pittsburgh residents. To this end, we sample 100 fictitious residents across the 88 neighborhoods of Pittsburgh, assign them a random residential parcel and generate three trips - grocery, commute and social - by three modes of transit - walking, biking and driving a personal vehicle. From these we then generate a mode of transit using a discrete choice model. See the Analysis Tab for further details.</p>
+<p>The first stage of data “collection” for the PTPT is generating simulated data. There are several reasons for this. To begin with, simulating data is cheap and quick while still providing some semblance of realism. Indeed, using the wealth of data sources available through the <a href="http://www.wprdc.org/">WPRDC</a> as well as American Community Survey data available through the <a href="https://www.census.gov/programs-surveys/acs">census</a>, open source data available through <a href="https://www.openstreetmap.org/">openstreetmap</a>, elevation data provided by <a href="https://earthdata.nasa.gov/esds/competitive-programs/measures/nasadem">NASA</a>, and more that can be seen in the table in the Data Sources section below, simulated data offer us the chance to quickly summon various scenarios of how transit behavior may vary amongst Pittsburgh residents. To this end, we sample 100 fictitious residents across the 88 neighborhoods of Pittsburgh, assign them a random residential parcel and generate three trips - grocery, commute and social - by three modes of transit - walking, biking and driving a personal vehicle. From these we then generate a mode of transit using a discrete choice model. See the Analysis Tab for further details.</p>
 <p>Further work in generating data will incorporate further modes of transit, and hypothetical modes of data collection that account for shared household trips, e.g. two subject participants make two different commute trips, but one shared grocery trip. These two will be of primary focus to better reflect both the transit reality of Pittsburghers as well as the likely reality of future data collection - clustered sampling - to which we now turn in greater detail in the next section.</p>
 </div>
 <div id="stage-2-convenience-sample" class="section level2">
@@ -33,6 +33,55 @@
 <div id="transit-factors" class="section level2">
 <h2>Transit factors</h2>
 <p>In addition to estimating the propensity to transit we are also interested in what factors influence this quantity. This include physical factors, such as the bike lanes, bus ways and other infrastructure that define spaces where cyclists and bus passengers are able to feel safest or obtain their most efficient travel, as well as social factors, such as the knowledge of “how to” ride a bike, or social peers that also ride bikes. Understanding these factors can be critical for motivating and guiding a transition away from a car-dominant transit landscape to a more resilient multi-modal landscape.</p>
+</div>
+<div id="data-sources" class="section level2">
+<h2>Data Sources</h2>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Organization</th>
+<th>Dataset</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>WPRDC</td>
+<td>Neighborhood Boundaries</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>WPRDC</td>
+<td>Street Coordinates</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>WPRDC</td>
+<td>Bike Lane Coordinates</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>WPRDC</td>
+<td>Zoning Boundaries</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>WPRDC</td>
+<td>Land Parcel Classifications</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>OSM</td>
+<td>Grocery Store Locations</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>OSM</td>
+<td>Trip Routes/Times</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="references" class="section level1 unnumbered">

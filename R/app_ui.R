@@ -32,9 +32,10 @@ app_ui <- function(request) {
       #          ),
       navbarMenu(
         "Analysis",
-        tabPanel("Data Collection",includeMarkdown("inst/app/www/DataCollection.Rmd")),
+        tabPanel("Model",withMathJax(includeHTML("inst/app/www/GenModel.html"))),
         tabPanel("Advocacy",mod_Advocacy_Analysis_ui("AdvocacyAnalysis")),
-        tabPanel("Education",h3("Education"))
+        tabPanel("Education",
+                 mod_EducationAnalysis_ui("EducationAnalysis"))
                 )
     )
   )

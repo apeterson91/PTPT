@@ -43,14 +43,14 @@ hptt <- diffdf %>%
     as_tibble() %>% 
     mutate(
            bodds = -5 + 
+                3*(BikeInfra>3) + 
                .5* (IncomeCat == "(0,20]") + 
                .25 *(IncomeCat == "(20,40]") -
                .5 * Female + 
                3*exp(- (bcdiff>0)*bcdiff / 3),
-           fodds =  -3 +
-               .5* (IncomeCat == "(0,20]") + 
-               .25 *(IncomeCat == "(20,40]") -
-               .5 * Female + 
+           fodds =  -3 + 
+               .5 * (IncomeCat == "(0,20]") + 
+               .25 *(IncomeCat == "(20,40]") + 
                3*exp(- (fcdiff>0)*fcdiff / 3),
            bodds = binomial()$linkinv(bodds),
            fodds = binomial()$linkinv(fodds),

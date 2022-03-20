@@ -51,14 +51,14 @@ as American Community Survey data available through the
 data available through [openstreetmap](https://www.openstreetmap.org/), 
 elevation data provided by 
 [NASA](https://earthdata.nasa.gov/esds/competitive-programs/measures/nasadem), 
-and more that can be seen in Table 1, simulated data offer us 
-the chance to quickly summon various scenarios of how transit behavior may vary 
-amongst Pittsburgh residents. To this end, we sample 100 fictitious residents 
-across the 88 neighborhoods of Pittsburgh, assign them a random residential 
-parcel and generate three trips - grocery, commute and social - by three modes 
-of transit - walking, biking and driving a personal vehicle. From these we then 
-generate a mode of transit using a discrete choice model. See the Analysis Tab 
-for further details.
+and more that can be seen in the table in the Data Sources section below, 
+simulated data offer us the chance to quickly summon various scenarios of 
+how transit behavior may vary amongst Pittsburgh residents. To this end, we 
+sample 100 fictitious residents across the 88 neighborhoods of Pittsburgh, 
+assign them a random residential parcel and generate three trips - grocery, 
+commute and social - by three modes of transit - walking, biking and driving a 
+personal vehicle. From these we then generate a mode of transit using a 
+discrete choice model. See the Analysis Tab for further details.
 
 Further work in generating data will incorporate further modes of transit, and 
 hypothetical modes of data collection that account for shared household trips, 
@@ -121,6 +121,18 @@ efficient travel, as well as social factors, such as the knowledge of
 these factors can be critical for motivating and guiding a transition away
 from a car-dominant transit landscape to a more resilient multi-modal landscape.
 
+
+## Data Sources
+
+|   | Organization | Dataset                     |
+|---|--------------|-----------------------------|
+|   | WPRDC        | Neighborhood Boundaries     |
+|   | WPRDC        | Street Coordinates          |
+|   | WPRDC        | Bike Lane Coordinates       |
+|   | WPRDC        | Zoning Boundaries           |
+|   | WPRDC        | Land Parcel Classifications |
+|   | OSM          | Grocery Store Locations     |
+|   | OSM          | Trip Routes/Times           |
 
 
 

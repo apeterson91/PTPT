@@ -18,7 +18,11 @@ modes <- c(
     "T" = "t",
     "Car" = "car"
 )
-
+binomial_smooth <- function(...) {
+    ggplot2::geom_smooth(method = "glm", 
+                         method.args = list(family = "binomial"), 
+                         ...)
+}
 showHoodPopup <- function(df, id, lat, lng){
     transit <- df %>% 
         dplyr::filter(hood == {{id}}) %>%

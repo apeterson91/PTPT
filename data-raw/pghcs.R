@@ -15,7 +15,7 @@ pgh_wealth <- get_acs(state = "PA",
                                     "B02001_003", ## Black
                                     "B02001_005",## Asian
                                     "B02001_008", ## >=2 Races
-                                    "B01002_001" # Median Age
+                                    "B01002_001", # Median Age
                                     ),
                       geometry = TRUE)
 

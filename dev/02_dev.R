@@ -35,7 +35,7 @@ golem::add_module( name = "DisplayMap" ) # Name of the module
 golem::add_module(name = "AboutPage")
 golem::add_module(name = "Methods")
 golem::add_module(name = "Analysis")
-golem::add_module(name = "TripEntry")
+golem::add_module(name = "EducationAnalysis")
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
@@ -58,6 +58,7 @@ usethis::use_data_raw(name = "s1hdata",open = FALSE)
 usethis::use_data_raw(name = "s1tdf", open = FALSE)
 usethis::use_data_raw(name = "s1sdata",open = FALSE)
 usethis::use_data_raw(name = "hptt",open = FALSE)
+usethis::use_data_raw(name = "s1mods", open = FALSE)
 
 ## Tests ----
 ## Add one line by test you want to create

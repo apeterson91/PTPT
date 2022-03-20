@@ -62,6 +62,21 @@ s1hdata <- read_sf("~/Google Drive/CityData/Burgh/Neighborhoods/Neighborhoods_.s
                             prob = c(pw,pb,pa,po)),
               IncomeCat = cut(Income, breaks = c(0,20,40,60,
                                                  80,100,150,500)),
+              Education = sample(c("Some High School","High School",
+                                   "Some College/Technical School",
+                                   "Technical Certification", 
+                                   "2-year","4-year","Post-Grad"),
+                                 size = 100,
+                                 replace = TRUE, prob = c(.01,.15,
+                                                          .15,.15,.15,.25,.15)),
+              household_indiv = rep(1,100),
+              BusComfort = sample(c("Don't","Do"), size = 100 , replace = TRUE,
+                                  prob = c(.85,.15)),
+              RailComfort = sample(c("Don't","Do"), 
+                                   size = 100, prob = c(.9,.1),
+                                   replace = TRUE),
+              BikeComfort = sample(c("Don't","Do"),size = 100,replace = TRUE),
+              BikeInfra = sample(0:5,size = 100, replace = TRUE),
               ) 
     })
 
