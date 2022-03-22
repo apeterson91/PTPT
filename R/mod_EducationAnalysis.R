@@ -38,14 +38,16 @@ mod_EducationAnalysis_server <- function(id){
         ) %>% 
         dplyr::group_by(purpose) %>% 
         tidyr::nest() %>% 
-        dplyr::mutate(fit = map(data, function(x) glm(multi_modal ~ BikeInfra + 
-                                                        Female, data = x,
-                                                      family = binomial()))) %>% 
+        dplyr::mutate(fit = purrr::map(data, function(x){
+          fit <- glm(multi_modal ~ BikeInfra + Female, 
+                     data = x, family = binomial())
+          return(fit)
+          })) %>% 
         dplyr::ungroup() %>% 
-        dplyr::mutate(pars = map(fit,broom::tidy)) %>% 
+        dplyr::mutate(pars = purrr::map(fit,broom::tidy)) %>% 
         tidyr::unnest(pars) %>% 
         dplyr::filter(stringr::str_detect(term,"Bike")) %>% 
-        mutate(Lower = exp(estimate - 2*std.error),
+        dplyr::mutate(Lower = exp(estimate - 2*std.error),
                Upper = exp(estimate + 2*std.error),
                estimate = exp(estimate)) %>% 
         ggplot2::ggplot(

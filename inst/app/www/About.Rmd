@@ -16,12 +16,13 @@ to see when changes are made.
 
 # About the Pittsburgh Transit Propensity Tool
 
+<img src="hex.jpg" alt="PTPT" width=120, height=100 style="vertical-align:middle">
+
 This site hosts and documents the Pittsburgh Transit Propensity Tool (PTPT), 
 a work that is inspired by and adapted from the 
 [Propensity to Cycle Tool](https://www.pct.bike/) [@lovelace2017propensity].
 It is licensed under an MIT license: it is free to 
-use, copy and modify. Please cite this blog post and arxiv citation if you 
-use the PTPT in your work.
+use, copy and modify. 
 
 
 ## Aim and Scope of the PTPT
@@ -47,7 +48,7 @@ capture the level of granularity in purpose and destination that this work does.
 
 You can see the source code for this project on 
 [github](www.github.com/apeterson91/ptpt) and read more 
-about the technical ideas behind this work in the Topics Overview tab or 
+about the technical ideas behind this work in the Methods tab or 
 on the [xstreetvalidated](xstreetvalidated.com) blog.
 
 

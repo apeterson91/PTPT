@@ -5,6 +5,7 @@ Authors@R: person('Adam', 'Peterson', email = 'adampeterso@gmail.com', role = c(
 Description: Pittsburgh Transit Propensity Tool Maps Transit Routes and Modes throughout.
 License: MIT + file LICENSE
 Imports: 
+    broom,
     config (>= 0.3.1),
     dplyr,
     DT,
@@ -13,11 +14,14 @@ Imports:
     golem (>= 0.3.1),
     leaflet,
     magrittr,
+    pkgload,
     processx,
+    purrr,
     sf,
     shiny (>= 1.6.0),
     shinyjs,
     shinythemes,
+    spelling,
     stringr,
     tidyr,
     vroom
@@ -29,7 +33,6 @@ BugReports: https://github.com/apeterson91/PTPT/issues
 Suggests: 
     rmarkdown,
     knitr,
-    spelling,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Language: en-US
